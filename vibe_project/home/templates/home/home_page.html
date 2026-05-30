@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags tour_extras %}
+
+{% block title %}{{ page.hero_headline }}{% endblock %}
+
+{% block body %}
+{% image page.hero_bg fill-1900x1100 as hero_bg %}
+
+<header class="hero" id="top">
+  <div class="hero__sky"></div>
+  <div class="hero__clouds"></div>
+  {% if hero_bg %}
+    <img class="hero__pano" src="{{ hero_bg.url }}" alt="Горы Дагестана">
+  {% else %}
+    <img class="hero__pano" src="{% static 'img/hero-default.jpg' %}" alt="Горы Дагестана">
+  {% endif %}
+
+  <div class="hero__topbar">
+    <a class="brand" href="#top">
+      <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+      <span class="brand__name">Vibe<b>Turistic</b></span>
+    </a>
+    <div class="hero__right">
+      <nav class="topnav">
+        <a href="#program">Программа</a>
+        <a href="#schedule">Расписание</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#why">Почему мы</a>
+      </nav>
+      <div class="social">
+        <a class="social__btn s-tg" href="{% if settings.tours.SiteSettings.telegram %}{{ settings.tours.SiteSettings.telegram }}{% else %}#{% endif %}" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-tg"></use></svg></a>
+        <a class="social__btn s-vk" href="{% if settings.tours.SiteSettings.vk %}{{ settings.tours.SiteSettings.vk }}{% else %}#{% endif %}" target="_blank" rel="noopener" title="ВКонтакте" aria-label="ВКонтакте"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-vk"></use></svg></a>
+        <a class="social__btn s-wa" href="{% if settings.tours.SiteSettings.whatsapp %}{{ settings.tours.SiteSettings.whatsapp }}{% else %}#{% endif %}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-wa"></use></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <svg class="hero__eagle"><use href="{% static 'img/sprite.svg' %}#eagle"></use></svg>
+
+  <figure class="pola pola--1"><img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=420&q=80" alt=""><figcaption>наш вайб ✦</figcaption></figure>
+  <figure class="pola pola--2"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=380&q=80" alt=""><figcaption>каньон</figcaption></figure>
+  <figure class="pola pola--3"><img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=420&q=80" alt=""><figcaption>на воде</figcaption></figure>
+  <figure class="pola pola--4"><img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=380&q=80" alt=""><figcaption>водопад</figcaption></figure>
+
+  <div class="hero__center">
+    <div class="wordmark">
+      <span class="wm-vibe">Vibe</span>
+      <span class="wm-tur">TURISTIC</span>
+    </div>
+    <div class="ribbon">🤘 {{ page.hero_ribbon }}</div>
+    <p class="hero__sub">{{ page.hero_subtitle }}</p>
+    <div class="hero__cta">
+      <a href="#ask" class="btn btn--neon">Забронировать тур <svg class="i" style="width:18px;height:18px"><use href="{% static 'img/sprite.svg' %}#i-arrow"></use></svg></a>
+      <a href="#program" class="btn btn--ghost">Смотреть программу</a>
+    </div>
+    <div class="hero__stats">
+      <span><b>{{ settings.tours.SiteSettings.subscribers }}</b> подписчиков</span>
+      <span>★ <b>{{ settings.tours.SiteSettings.rating }}</b></span>
+      <span><b>{{ settings.tours.SiteSettings.reviews_count }}</b> отзывов</span>
+      <span>отвечаем за <b>1 минуту</b></span>
+    </div>
+  </div>
+
+  <a href="#program" class="scrollcue"><span>листай вниз</span><span class="dot"></span></a>
+</header>
+
+<a href="#ask" class="mob-book-btn">Забронировать тур
+  <svg class="i" style="width:16px;height:16px"><use href="{% static 'img/sprite.svg' %}#i-arrow"></use></svg>
+</a>
+
+<nav class="tabnav" id="tabnav">
+  <div class="wrap tabnav__inner">
+    <a href="#ask" class="btn btn--neon tabnav__book">Забронировать тур</a>
+    <div class="tabnav__row">
+    <button class="tab" data-target="program">
+      <span class="tab__ic ic-prog"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-mountain"></use></svg></span>
+      <span class="tab__tx"><small>Туры</small><b>Программы туров</b></span>
+    </button>
+    <button class="tab" data-target="schedule">
+      <span class="tab__ic ic-sched"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-calendar"></use></svg></span>
+      <span class="tab__tx"><small>Даты</small><b>Расписание</b></span>
+    </button>
+    <button class="tab" data-target="reviews">
+      <span class="tab__ic ic-rev"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-star"></use></svg></span>
+      <span class="tab__tx"><small>{{ settings.tours.SiteSettings.rating }} ★</small><b>Отзывы</b></span>
+    </button>
+    <button class="tab" data-target="why">
+      <span class="tab__ic ic-why"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-flame"></use></svg></span>
+      <span class="tab__tx"><small>О нас</small><b>Почему мы</b></span>
+    </button>
+    <button class="tab" data-target="dresscode">
+      <span class="tab__ic ic-sched" style="color:var(--ink)"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-tshirt"></use></svg></span>
+      <span class="tab__tx"><small>Памятка</small><b>Дресс-код</b></span>
+    </button>
+    <button class="tab" data-target="ask">
+      <span class="tab__ic ic-ask"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-question"></use></svg></span>
+      <span class="tab__tx"><small>Связь</small><b>Задать вопрос</b></span>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<section class="section winter" id="program">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Программы туров · заезды круглый год</span>
+      <h1 class="h-section">Выбери свой <span class="hl">формат тура</span></h1>
+      <p class="lead">Три формата под любой ритм. Нажми на карточку — внутри подробная программа: даты, цены, что входит и памятка в дорогу.</p>
+    </div>
+
+    <div class="tourcards reveal">
+      {% for tour in tours %}
+        <a class="tcard{% if tour.is_custom %} indiv{% endif %}" href="{% pageurl tour %}">
+          <div class="tcard__media">
+            {% if tour.card_image %}
+              {% image tour.card_image fill-900x600 alt=tour.title %}
+            {% else %}
+              <img src="{% static 'img/tour-default.jpg' %}" alt="{{ tour.title }}">
+            {% endif %}
+            {% if tour.badge %}<span class="tcard__badge">{{ tour.badge }}</span>{% endif %}
+            <span class="tcard__dur"><svg class="i" style="width:18px"><use href="{% static 'img/sprite.svg' %}#i-mountain"></use></svg> {{ tour.duration_label }}</span>
+          </div>
+          <div class="tcard__body">
+            <h3 class="tcard__title">{{ tour.title }}<span>{{ tour.tagline|truncatewords:5 }}</span></h3>
+            <p class="tcard__tag">{{ tour.tagline }}</p>
+            <div class="tcard__price">
+              {% if tour.is_custom or tour.price is None %}
+                <b>Цена по запросу</b>
+              {% else %}
+                <b>{{ tour.price|rub }} ₽</b><small>за человека</small>
+              {% endif %}
+            </div>
+            <div class="tcard__cta">
+              <span class="btn {{ tour.is_custom|yesno:'btn--neon,btn--blue' }}">Подробнее о туре
+                <svg class="i" style="width:18px;height:18px"><use href="{% static 'img/sprite.svg' %}#i-arrow"></use></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="bookband reveal">
+      <svg class="bookband__sheep sheep-bounce"><use href="{% static 'img/sprite.svg' %}#sheep"></use></svg>
+      <div class="bookband__tx">
+        <span class="eyebrow" style="color:var(--ink)">Места разбирают быстро</span>
+        <h3>Готов поехать в Дагестан?</h3>
+        <p>Внеси предоплату и закрепи место в группе. Остальное — наша забота.</p>
+      </div>
+      <a href="#ask" class="btn btn--dark">Забронировать тур <svg class="i" style="width:18px;height:18px"><use href="{% static 'img/sprite.svg' %}#i-arrow"></use></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="schedule">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Расписание · ближайшие заезды</span>
+      <h2 class="h-section">Когда <span class="hl">едем?</span></h2>
+      <p class="lead">Заезды каждую неделю. Бронируй заранее — группы разбирают быстро.</p>
+    </div>
+    <div class="sched reveal">
+      {% for ym, deps in schedule %}
+        {% with m=ym.1|stringformat:"02d" %}
+        <div class="schedcard">
+          <div class="schedcard__top m-{{ m }}">
+            <div>
+              <div class="mo">{{ deps.0.date_from|date:"E" }}</div>
+              <div class="yr">{{ deps.0.date_from|date:"Y" }}</div>
+            </div>
+            <svg class="i" style="width:26px;height:26px"><use href="{% static 'img/sprite.svg' %}#i-calendar"></use></svg>
+          </div>
+          <div class="schedcard__body">
+            {% for d in deps %}
+              <div class="schedrow">
+                <div class="dt">{{ d.date_from|date:"j" }}–{{ d.date_to|date:"j" }}<small>{{ d.tour.title }}</small></div>
+                <span class="seats {{ d.status }}">{{ d.get_status_display }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endwith %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reviews" id="reviews">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Отзывы · {{ settings.tours.SiteSettings.reviews_count }} оценок</span>
+      <h2 class="h-section">Что говорят <span class="hl">туристы</span></h2>
+    </div>
+    <div class="revsum reveal">
+      <div class="revsum__score">{{ settings.tours.SiteSettings.rating }}</div>
+      <div>
+        <div class="revsum__stars">★★★★★</div>
+        <div class="revsum__meta">на основе {{ settings.tours.SiteSettings.reviews_count }} отзывов · 96% советуют друзьям</div>
+      </div>
+    </div>
+    <div class="revgrid reveal">
+      {% for review in reviews %}
+        <div class="revcard">
+          <div class="revcard__top">
+            <span class="revcard__av" style="background:{{ review.avatar_color }}">{{ review.initials }}</span>
+            <span class="revcard__nm">{{ review.name }}<small>{{ review.city }}</small></span>
+            <span class="revcard__stars">{% for i in "12345"|make_list %}{% if forloop.counter <= review.rating %}★{% endif %}{% endfor %}</span>
+          </div>
+          <p>{{ review.text }}</p>
+          {% if review.tour_label %}<div class="tour-tag">{{ review.tour_label }}</div>{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why" style="background:linear-gradient(180deg,var(--sky-1),#fff)">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Почему мы</span>
+      <h2 class="h-section">Почему <span class="hl">Vibe Turistic</span></h2>
+      <p class="lead">Это не экскурсия по расписанию, а «лагерь для взрослых»: эмоции, новые друзья и Дагестан, который не покажут в обычном туре.</p>
+    </div>
+    <div class="whygrid reveal">
+      {% for item in why_items %}
+        <div class="whycard{% if forloop.first %} big{% endif %}">
+          {% if forloop.first %}
+            <div class="bignum">№1</div>
+          {% else %}
+            <div class="wic ic-{{ item.theme }}"><svg class="i"><use href="{% static 'img/sprite.svg' %}#{{ item.icon }}"></use></svg></div>
+          {% endif %}
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section dresscode" id="dresscode">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Памятка гостям · уважение к традициям</span>
+      <h2 class="h-section">Дресс-<span class="hl">код</span> в Дагестане</h2>
+      <p class="lead">Уважаемые гости нашей прекрасной республики Дагестан! Информируем о действующем регламенте в отношении внешнего вида. Мы добавили примеры приемлемой одежды, а наши сотрудники всегда готовы помочь с подбором гардероба, если появятся вопросы.</p>
+    </div>
+    <div class="dressgrid reveal">
+      <div class="dresscard">
+        <span class="dresscard__ic"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-tshirt"></use></svg></span>
+        <div><b>Закрытые плечи и грудь</b><span>предпочтительны рукава и закрытый верх</span></div>
+      </div>
+      <div class="dresscard">
+        <span class="dresscard__ic"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-heart"></use></svg></span>
+        <div><b>Закрытая зона декольте</b><span>без глубоких вырезов</span></div>
+      </div>
+      <div class="dresscard">
+        <span class="dresscard__ic"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-legs"></use></svg></span>
+        <div><b>Закрытые ноги</b><span>длинные брюки вместо шорт</span></div>
+      </div>
+      <div class="dresscard">
+        <span class="dresscard__ic"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-dress"></use></svg></span>
+        <div><b>Юбка или платье ниже колена</b><span>свободный, не облегающий крой</span></div>
+      </div>
+    </div>
+    <div class="helpnote reveal" style="margin-top:24px">
+      <svg class="sheep-mini"><use href="{% static 'img/sprite.svg' %}#sheep"></use></svg>
+      <p><b>Это не строгий запрет, а знак уважения к местным традициям.</b> В горах и святых местах к одежде относятся внимательнее — мы подскажем, что взять с собой.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section cta" id="ask">
+  <div class="wrap">
+    <div class="section__head reveal" style="align-items:center;text-align:center;margin-bottom:36px">
+      <span class="eyebrow" style="color:var(--neon)">Бронирование · обратная связь</span>
+      <h2 class="h-section" style="text-align:center">Забронируй <span class="hl">место</span></h2>
+      <p class="lead" style="color:rgba(255,255,255,.7);text-align:center;margin:0 auto">Оставь заявку — поможем выбрать тур, подскажем по датам и забронируем место. Отвечаем в среднем за 1 минуту.</p>
+    </div>
+    {{ tours_departures|json_script:"tours-departures-data" }}
+    <form class="askcard reveal" id="askform" method="POST" action="{% url 'booking_submit' %}" novalidate>
+      {% csrf_token %}
+      <div class="field"><label>Как тебя зовут?</label><input name="name" placeholder="Имя" required></div>
+      <div class="field"><label>Телефон или ник в Telegram</label><input name="contact" placeholder="+7 ··· / @username" required></div>
+      <div class="field"><label>E-mail</label><input name="email" type="email" placeholder="example@mail.ru"></div>
+      <div class="field"><label>Какой тур интересует?</label>
+        <select name="tour" id="form-tour">
+          <option value="">Выберите тур</option>
+          {% for tour in tours %}
+            <option value="{{ tour.pk }}">{{ tour.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field"><label>Дата заезда</label>
+        <select name="departure" id="form-departure">
+          <option value="">Сначала выберите тур</option>
+        </select>
+      </div>
+      <div class="field full"><label>Комментарий или вопрос</label><textarea name="msg" rows="3" placeholder="Например: едем вдвоём, остались ли места на 5-дневный тур в июле?"></textarea></div>
+      <div class="field full captcha">
+        <label>Проверка: сколько будет <b id="captcha-q">2 + 3</b>?</label>
+        <input name="captcha" id="captcha-input" inputmode="numeric" autocomplete="off" placeholder="Ответ числом" required>
+        <span class="captcha-err" id="captcha-err">Неверно, попробуйте ещё раз</span>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="btn btn--neon">Отправить заявку <svg class="i" style="width:18px;height:18px"><use href="{% static 'img/sprite.svg' %}#i-arrow"></use></svg></button>
+        <span class="note-ok">✓ Спасибо! Мы свяжемся с тобой в ближайшую минуту 🐑</span>
+      </div>
+      <p class="askcard__consent">Нажимая кнопку, вы соглашаетесь с <a href="/offer/">офертой</a> и даёте <a href="/consent/">согласие на обработку персональных данных</a>.</p>
+    </form>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  const MONTHS = ['января','февраля','марта','апреля','мая','июня',
+                  'июля','августа','сентября','октября','ноября','декабря'];
+  const DATA = JSON.parse(document.getElementById('tours-departures-data').textContent);
+  const tourSel = document.getElementById('form-tour');
+  const depSel  = document.getElementById('form-departure');
+
+  function fmtRange(f, t) {
+    const [,fm,fd] = f.split('-').map(Number);
+    const [,tm,td] = t.split('-').map(Number);
+    return fm === tm
+      ? fd + '–' + td + ' ' + MONTHS[tm - 1]
+      : fd + ' ' + MONTHS[fm - 1] + ' – ' + td + ' ' + MONTHS[tm - 1];
+  }
+
+  function updateDeps() {
+    const id = tourSel.value;
+    depSel.innerHTML = '';
+    if (!id) {
+      depSel.appendChild(new Option('Сначала выберите тур', ''));
+      return;
+    }
+    const deps = DATA[id] || [];
+    if (!deps.length) {
+      depSel.appendChild(new Option('Даты уточняются — свяжитесь с нами', ''));
+      return;
+    }
+    depSel.appendChild(new Option('Выберите дату заезда', ''));
+    deps.forEach(function (d) {
+      const label = fmtRange(d.from, d.to)
+        + (d.status === 'full' ? ' · нет мест' : d.status === 'low' ? ' · мало мест' : '');
+      const opt = new Option(label, d.value);
+      if (d.status === 'full') opt.disabled = true;
+      depSel.appendChild(opt);
+    });
+  }
+
+  tourSel.addEventListener('change', updateDeps);
+  updateDeps();
+})();
+</script>
+{% endblock %}

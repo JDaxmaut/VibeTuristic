@@ -1,0 +1,40 @@
+# ── Python ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.Python
+
+# ── Django / Wagtail ──────────────────────────────────────────
+*.log
+*.sqlite3
+vibe_project/vibe_project/settings/local.py
+
+# Collectstatic output (generated at build time, not source)
+/vibe_project/static/
+
+# User-uploaded media
+/vibe_project/media/
+
+# ── Node ──────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# ── Окружение ─────────────────────────────────────────────────
+.env
+.env.*
+*.env
+
+# ── OS / редакторы ────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Прочее ────────────────────────────────────────────────────
+.thumbnail
+uploads/

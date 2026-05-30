@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Зимний тур 3 дня — Vibe Turistic</title>
+<link rel="stylesheet" href="../styles/vibe.css">
+</head>
+<body data-palette="sky" data-cards="solid" data-sheep="on">
+
+<!-- ============ HERO ============ -->
+<header class="tourhead">
+  <img class="tourhead__bg" src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1900&q=80" alt="Зимний Дагестан">
+  <div class="tourtop">
+    <a class="brand" href="../Vibe%20Travel.html">
+      <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+      <span class="brand__name">Vibe<b>Turistic</b></span>
+    </a>
+    <a class="tourback" href="../Vibe%20Travel.html">← все туры</a>
+  </div>
+  <div class="tourhead__in">
+    <span class="tourhead__badge">Уикенд · 3 дня / 2 ночи</span>
+    <h1>Зимний тур <span>на 3 дня</span></h1>
+    <p class="tourhead__sub">Насыщенный уикенд для тех, у кого мало времени, но много энергии — всё самое яркое за выходные.</p>
+    <div class="tourhead__row">
+      <div class="tourhead__price"><b>33 000 ₽</b><small>за человека</small></div>
+      <a href="#book" class="btn btn--neon">Забронировать тур <svg class="i" style="width:18px;height:18px"><use href="../assets/sprite.svg#i-arrow"></use></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="tourwrap">
+  <nav class="breadcrumb"><a href="../Vibe%20Travel.html">Главная</a> → <a href="../Vibe%20Travel.html#program">Туры</a> → Зимний тур, 3 дня</nav>
+
+  <!-- Dates -->
+  <section class="section" style="padding-top:clamp(48px,6vw,80px)">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">01 — даты заездов</span>
+        <h2 class="h-section">Когда <span class="hl">едем?</span></h2>
+      </div>
+      <div class="dategrid reveal" id="dates"></div>
+    </div>
+  </section>
+
+  <!-- Photo strip -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Лента тура · как это выглядит</span>
+        <h2 class="h-section">Фото <span class="hl">с маршрута</span></h2>
+      </div>
+      <div class="photostrip reveal" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- Info grid -->
+  <section class="section winter" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">02 — коротко о главном</span>
+        <h2 class="h-section">Основная информация<br>по туру</h2>
+      </div>
+      <div class="infogrid" id="infogrid"></div>
+    </div>
+  </section>
+
+  <!-- Included -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">03 — всё включено</span>
+        <h2 class="h-section">Что входит <span class="hl">в стоимость?</span></h2>
+      </div>
+      <div class="listblock reveal">
+        <div class="listblock__media">
+          <div class="photoframe">
+            <span class="tape"></span>
+            <img src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=900&q=80" alt="Горы Дагестана">
+          </div>
+          <div class="photo-badge"><svg class="i" style="width:18px"><use href="../assets/sprite.svg#i-leaf"></use></svg> всё <span class="pop">включено</span></div>
+        </div>
+        <div>
+          <ul class="checklist checklist--in" id="inc-list"></ul>
+          <div class="helpnote">
+            <svg class="sheep-mini"><use href="../assets/sprite.svg#sheep"></use></svg>
+            <p><b>Приехали раньше или уезжаете позже?</b> Поможем подобрать отель, если планируете приехать за сутки до старта тура (или раньше), либо задержаться после.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOT included -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">04 — оплачивается отдельно</span>
+        <h2 class="h-section">Что <span class="hl">НЕ входит</span><br>в стоимость?</h2>
+      </div>
+      <div class="listblock rev reveal">
+        <div class="listblock__media">
+          <div class="photoframe">
+            <span class="tape" style="background:var(--pop)"></span>
+            <img src="https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?w=900&q=80" alt="Бархан Сарыкум">
+          </div>
+          <div class="photo-badge"><svg class="i" style="width:18px"><use href="../assets/sprite.svg#i-x"></use></svg> сверх <span class="pop">программы</span></div>
+        </div>
+        <div><ul class="checklist checklist--out" id="notinc-list"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Take with you -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">05 — памятка / дресс-код</span>
+        <h2 class="h-section">Что взять <span class="hl">с собой?</span></h2>
+      </div>
+      <div class="takegrid reveal" id="take"></div>
+    </div>
+  </section>
+
+  <!-- Important -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="important">
+          <div class="important__bang">!</div>
+          <div>
+            <h3>Что <span class="hl">важно знать?</span></h3>
+            <p>Маршрут, график и порядок посещения локаций являются <b>ориентировочными</b> и могут быть изменены — из-за погоды, дорожных условий или состояния группы.</p>
+            <p>Поэтому важно быть готовыми к возможным изменениям и относиться к ним с пониманием: иногда самые крутые места случаются спонтанно. 🏔️</p>
+          </div>
+          <svg class="sheep-corner sheep-bounce"><use href="../assets/sprite.svg#sheep"></use></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking band -->
+  <section class="section" id="book" style="padding-top:0">
+    <div class="wrap">
+      <div class="bookband reveal">
+        <svg class="bookband__sheep sheep-bounce"><use href="../assets/sprite.svg#sheep"></use></svg>
+        <div class="bookband__tx">
+          <span class="eyebrow" style="color:var(--ink)">Места разбирают быстро</span>
+          <h3>Готов поехать на 3 дня?</h3>
+          <p>Внеси предоплату 10 000 ₽ и закрепи место в группе. Остальное — наша забота.</p>
+        </div>
+        <a href="../Vibe%20Travel.html#ask" class="btn btn--dark">Забронировать тур <svg class="i" style="width:18px;height:18px"><use href="../assets/sprite.svg#i-arrow"></use></svg></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="brand" href="../Vibe%20Travel.html">
+          <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+          <span class="brand__name" style="text-shadow:none">Vibe<b>Turistic</b></span>
+        </a>
+        <p>Молодёжные туры по Дагестану. Горы, море, барханы и движ — собираем группы круглый год.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h5>Туры</h5>
+          <a href="tour-5.html">Тур 5 дней</a>
+          <a href="tour-3.html">Тур 3 дня</a>
+          <a href="../Vibe%20Travel.html#program">Все форматы</a>
+          <a href="../Vibe%20Travel.html#schedule">Расписание</a>
+        </div>
+        <div class="footer__col">
+          <h5>Документы</h5>
+          <a href="../docs/privacy-policy.html" target="_blank">Политика конфиденциальности</a>
+          <a href="../docs/consent.html" target="_blank">Согласие на обработку данных</a>
+          <a href="../docs/offer.html" target="_blank">Договор оферты</a>
+          <a href="../docs/terms.html" target="_blank">Пользовательское соглашение</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Vibe Turistic. Маршруты ориентировочны и могут меняться.</span>
+      <span>Сделано с вайбом 🐑 в Дагестане</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.VIBE_SPRITE='../assets/sprite.svg';window.VIBE_TOUR_KEY='3';</script>
+<script src="../scripts/tour-data.js"></script>
+<script src="../scripts/tour-page.js"></script>
+</body>
+</html>

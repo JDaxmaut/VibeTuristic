@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags tour_extras %}
+
+{# ============================================================
+   Страница тура (TourPage) — весь контент из админки Wagtail.
+   Поля модели: badge, duration_label, tagline, price, prepay,
+   group_size, meet_time, return_time, hero_image, included_image,
+   excluded_image, important_note, is_custom.
+   Инлайны: included_items, excluded_items, packing_items.
+   Заезды: page.departures (snippet Departure).
+   ============================================================ #}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block body %}
+{% with sprite="img/sprite.svg" %}
+
+<!-- ============ HERO ============ -->
+<header class="tourhead">
+  {% if page.hero_image %}
+    {% image page.hero_image fill-1900x1100 class="tourhead__bg" alt=page.title %}
+  {% else %}
+    <img class="tourhead__bg" src="{% static 'img/tour-default.jpg' %}" alt="{{ page.title }}">
+  {% endif %}
+
+  <div class="tourtop">
+    <a class="brand" href="/">
+      <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+      <span class="brand__name">Vibe<b>Turistic</b></span>
+    </a>
+    <a class="tourback" href="/#program">← все туры</a>
+  </div>
+
+  <div class="tourhead__in">
+    {% if page.badge %}
+      <span class="tourhead__badge">{{ page.badge }}{% if page.duration_label %} · {{ page.duration_label }}{% endif %}</span>
+    {% elif page.duration_label %}
+      <span class="tourhead__badge">{{ page.duration_label }}</span>
+    {% endif %}
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.tagline %}<p class="tourhead__sub">{{ page.tagline }}</p>{% endif %}
+
+    <div class="tourhead__row">
+      {% if page.is_custom or page.price is None %}
+        <div class="tourhead__price"><b>Цена по запросу</b></div>
+      {% else %}
+        <div class="tourhead__price"><b>{{ page.price|rub }} ₽</b><small>за человека</small></div>
+      {% endif %}
+      <a href="#book" class="btn btn--neon">Забронировать тур
+        <svg class="i" style="width:18px;height:18px"><use href="{% static sprite %}#i-arrow"></use></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="tourwrap">
+  <nav class="breadcrumb"><a href="/">Главная</a> → <a href="/#program">Туры</a> → {{ page.title }}</nav>
+
+  <!-- 01 · Даты заездов (из снипета Departure) -->
+  {% if page.departures %}
+  <section class="section" style="padding-top:clamp(48px,6vw,80px)">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">01 — даты заездов</span>
+        <h2 class="h-section">Когда <span class="hl">едем?</span></h2>
+      </div>
+      <div class="dategrid reveal">
+        {% for d in page.departures %}
+          <div class="datechip">
+            <div class="datechip__d">{{ d.date_from|date:"j" }}–{{ d.date_to|date:"j" }}
+              <small>{{ d.date_from|date:"F Y" }}</small>
+            </div>
+            <span class="seats {{ d.status }}">
+              {% if d.status == "full" %}нет мест
+              {% elif d.status == "low" %}{{ d.seats_left }} мест
+              {% else %}есть места{% endif %}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- 02 · Основная информация -->
+  <section class="section winter" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">02 — коротко о главном</span>
+        <h2 class="h-section">Основная информация<br>по туру</h2>
+      </div>
+      <div class="infogrid">
+        {% if not page.is_custom and page.price is not None %}
+        <article class="infocard c-price span6">
+          <div class="q"><span class="qic"><svg class="i"><use href="{% static sprite %}#i-wallet"></use></svg></span>Сколько стоит тур?</div>
+          <div><div class="v">{{ page.price|rub }} <small>₽</small></div><div class="sub">за человека</div></div>
+        </article>
+        {% endif %}
+        {% if page.prepay is not None %}
+        <article class="infocard c-pre">
+          <div class="q"><span class="qic"><svg class="i"><use href="{% static sprite %}#i-card"></use></svg></span>Сколько предоплата?</div>
+          <div><div class="v">{{ page.prepay|rub }} <small>₽</small></div><div class="sub">для брони места</div></div>
+        </article>
+        {% endif %}
+        <article class="infocard c-grp">
+          <div class="q"><span class="qic"><svg class="i"><use href="{% static sprite %}#i-people"></use></svg></span>Сколько человек в группе?</div>
+          <div><div class="v">{{ page.group_size }} <small>чел.</small></div><div class="sub">маленькая компания</div></div>
+        </article>
+        <article class="infocard c-meet">
+          <div class="q"><span class="qic"><svg class="i"><use href="{% static sprite %}#i-sunrise"></use></svg></span>Во сколько сбор тура?</div>
+          <div><div class="v">{{ page.meet_time }} <small>утра</small></div><div class="sub">в день старта</div></div>
+        </article>
+        <article class="infocard c-back">
+          <div class="q"><span class="qic"><svg class="i"><use href="{% static sprite %}#i-plane"></use></svg></span>Во сколько вылет обратно?</div>
+          <div><div class="v">{{ page.return_time }}</div><div class="sub">в день отъезда</div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Что входит -->
+  {% if page.included_items.all %}
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">03 — всё включено</span>
+        <h2 class="h-section">Что входит <span class="hl">в стоимость?</span></h2>
+      </div>
+      <div class="listblock reveal">
+        <div class="listblock__media">
+          <div class="photoframe">
+            <span class="tape"></span>
+            {% if page.included_image %}
+              {% image page.included_image fill-900x720 alt="Что входит в тур" %}
+            {% else %}
+              <img src="{% static 'img/included-default.jpg' %}" alt="Что входит в тур">
+            {% endif %}
+          </div>
+          <div class="photo-badge"><svg class="i" style="width:18px"><use href="{% static sprite %}#i-leaf"></use></svg> всё <span class="pop">включено</span></div>
+        </div>
+        <div>
+          <ul class="checklist checklist--in">
+            {% for item in page.included_items.all %}
+              <li><span class="mk"><svg class="i"><use href="{% static sprite %}#i-check"></use></svg></span><span>{{ item.text|safe }}</span></li>
+            {% endfor %}
+          </ul>
+          <div class="helpnote">
+            <svg class="sheep-mini"><use href="{% static sprite %}#sheep"></use></svg>
+            <p><b>Приехали раньше или уезжаете позже?</b> Поможем подобрать отель, если планируете приехать за сутки до старта тура (или раньше), либо задержаться после.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- 04 · Что НЕ входит -->
+  {% if page.excluded_items.all %}
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">04 — оплачивается отдельно</span>
+        <h2 class="h-section">Что <span class="hl">НЕ входит</span><br>в стоимость?</h2>
+      </div>
+      <div class="listblock rev reveal">
+        <div class="listblock__media">
+          <div class="photoframe">
+            <span class="tape" style="background:var(--pop)"></span>
+            {% if page.excluded_image %}
+              {% image page.excluded_image fill-900x720 alt="Не входит в тур" %}
+            {% else %}
+              <img src="{% static 'img/excluded-default.jpg' %}" alt="Не входит в тур">
+            {% endif %}
+          </div>
+          <div class="photo-badge"><svg class="i" style="width:18px"><use href="{% static sprite %}#i-x"></use></svg> сверх <span class="pop">программы</span></div>
+        </div>
+        <div>
+          <ul class="checklist checklist--out">
+            {% for item in page.excluded_items.all %}
+              <li><span class="mk"><svg class="i"><use href="{% static sprite %}#i-x"></use></svg></span><span>{{ item.text }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- 05 · Что взять с собой -->
+  {% if page.packing_items.all %}
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">05 — памятка / дресс-код</span>
+        <h2 class="h-section">Что взять <span class="hl">с собой?</span></h2>
+      </div>
+      <div class="takegrid reveal">
+        {% for item in page.packing_items.all %}
+          <div class="takecard{% if item.icon == 'i-smile' %} fun{% endif %}">
+            <span class="tic"><svg class="i"><use href="{% static sprite %}#{{ item.icon }}"></use></svg></span>
+            <b>{{ item.title }}</b>
+            {% if item.note %}<span>{{ item.note }}</span>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- 06 · Что важно знать (дисклеймер) -->
+  {% if page.important_note %}
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="important">
+          <div class="important__bang">!</div>
+          <div>
+            <h3>Что <span class="hl">важно знать?</span></h3>
+            {{ page.important_note|richtext }}
+          </div>
+          <svg class="sheep-corner sheep-bounce"><use href="{% static sprite %}#sheep"></use></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Бронирование -->
+  <section class="section" id="book" style="padding-top:0">
+    <div class="wrap">
+      <div class="bookband reveal">
+        <svg class="bookband__sheep sheep-bounce"><use href="{% static sprite %}#sheep"></use></svg>
+        <div class="bookband__tx">
+          <span class="eyebrow" style="color:var(--ink)">Места разбирают быстро</span>
+          <h3>Готов поехать?</h3>
+          <p>{% if page.prepay %}Внеси предоплату {{ page.prepay|rub }} ₽ и закрепи место в группе.{% else %}Оставь заявку и закрепи место в группе.{% endif %} Остальное — наша забота.</p>
+        </div>
+        <a href="/#ask" class="btn btn--dark">Забронировать тур
+          <svg class="i" style="width:18px;height:18px"><use href="{% static sprite %}#i-arrow"></use></svg></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endwith %}
+{% endblock %}

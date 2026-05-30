@@ -1,0 +1,71 @@
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags %}
+{% get_settings use_default_site=True as site %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ page.title }}{% endblock %} — Vibe Turistic</title>
+
+  {# vibe.css — те же дизайн-токены и компоненты, что и в прототипе #}
+  <link rel="stylesheet" href="{% static 'css/vibe.css' %}">
+
+  {# спрайт иконок: положите assets/sprite.svg в static/img/sprite.svg #}
+</head>
+<body data-palette="sky" data-cards="solid" data-sheep="on">
+
+{#
+  ВАЖНО: SVG-спрайт удобно заинлайнить один раз сюда (содержимое assets/sprite.svg),
+  чтобы <use href="#i-..."> работал без префикса пути. Либо использовать
+  внешний спрайт: <use href="{% static 'img/sprite.svg' %}#i-...">.
+  В шаблонах ниже используется внешний вариант через {% static %}.
+#}
+{% include "partials/sprite.svg" %}
+
+{% block body %}{% endblock %}
+
+{# ───────────── ФУТЕР ───────────── #}
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="brand" href="/">
+          <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+          <span class="brand__name" style="text-shadow:none">Vibe<b>Turistic</b></span>
+        </a>
+        <p>Молодёжные туры по Дагестану. Горы, море, барханы и движ — собираем группы круглый год.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h5>Туры</h5>
+          {% for t in tours %}
+            <a href="{% pageurl t %}">{{ t.title }}</a>
+          {% endfor %}
+          <a href="/#program">Все форматы</a>
+          <a href="/#schedule">Расписание</a>
+        </div>
+        <div class="footer__col">
+          <h5>Связь</h5>
+          {% if site.site_settings.telegram %}<a href="{{ site.site_settings.telegram }}" target="_blank" rel="noopener">Telegram</a>{% endif %}
+          {% if site.site_settings.vk %}<a href="{{ site.site_settings.vk }}" target="_blank" rel="noopener">ВКонтакте</a>{% endif %}
+          {% if site.site_settings.whatsapp %}<a href="{{ site.site_settings.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+        </div>
+        <div class="footer__col">
+          <h5>Документы</h5>
+          {% for doc in legal_pages %}
+            <a href="{% pageurl doc %}" target="_blank">{{ doc.title }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© {% now "Y" %} Vibe Turistic. Маршруты ориентировочны и могут меняться.</span>
+      <span>Сделано с вайбом 🐑 в Дагестане</span>
+    </div>
+  </div>
+</footer>
+
+<script src="{% static 'js/reveal.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

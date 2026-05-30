@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags tour_extras %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block body %}
+<div class="legal-topbar">
+  <div class="wrap legal-topbar__inner">
+    <a class="brand" href="/">
+      <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+      <span class="brand__name">Vibe<b>Turistic</b></span>
+    </a>
+    <a class="legal-back" href="/">← на главную</a>
+  </div>
+</div>
+
+<div class="legal-wrap">
+  <aside class="legal-nav">
+    <p class="legal-nav__title">Документы</p>
+    {% get_legal_pages as all_legal %}
+    {% for doc in all_legal %}
+      <a href="{% pageurl doc %}" class="legal-nav__link{% if doc.pk == page.pk %} active{% endif %}">{{ doc.title }}</a>
+    {% endfor %}
+  </aside>
+
+  <main class="legal-main">
+    <nav class="breadcrumb"><a href="/">Главная</a> → {{ page.title }}</nav>
+    <h1>{{ page.title }}</h1>
+    <div class="legal-body">
+      {{ page.body|richtext }}
+    </div>
+  </main>
+</div>
+{% endblock %}
