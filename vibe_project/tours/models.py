@@ -2,7 +2,10 @@ from django.db import models
 from django.utils import timezone
 from wagtail.models import Page, Orderable
 from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.admin.panels import (
+    FieldPanel, InlinePanel, MultiFieldPanel,
+    TabbedInterface, ObjectList,
+)
 from wagtail.snippets.models import register_snippet
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from modelcluster.fields import ParentalKey
@@ -195,6 +198,20 @@ class TourPage(Page):
         InlinePanel("gallery_photos", heading="Фотогалерея"),
     ]
 
+    schedule_panels = [
+        InlinePanel(
+            "departure_set",
+            heading="Заезды тура",
+            label="Заезд",
+        ),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading="Содержимое"),
+        ObjectList(schedule_panels, heading="Расписание"),
+        ObjectList(Page.promote_panels, heading="Продвижение"),
+    ])
+
     @property
     def departures(self):
         return self.departure_set.filter(date_from__gte=timezone.now()).order_by(
@@ -308,7 +325,9 @@ class Departure(models.Model):
         ("full", "нет мест"),
     ]
 
-    tour = models.ForeignKey(TourPage, on_delete=models.CASCADE, verbose_name="Тур")
+    # ParentalKey is required for InlinePanel on TourPage
+    tour = ParentalKey(TourPage, on_delete=models.CASCADE, verbose_name="Тур",
+                       related_name="departure_set")
     date_from = models.DateField("Начало")
     date_to = models.DateField("Конец")
     seats_left = models.PositiveIntegerField("Осталось мест", default=18)
@@ -318,13 +337,22 @@ class Departure(models.Model):
 
     objects = DepartureQuerySet.as_manager()
 
+    panels = [
+        MultiFieldPanel([
+            FieldPanel("date_from"),
+            FieldPanel("date_to"),
+        ], heading="Даты заезда"),
+        FieldPanel("seats_left"),
+        FieldPanel("status"),
+    ]
+
     class Meta:
         ordering = ["date_from"]
         verbose_name = "Заезд"
         verbose_name_plural = "Заезды"
 
     def __str__(self):
-        return f"{self.tour.title}: {self.date_from}–{self.date_to}"
+        return f"{self.date_from} – {self.date_to}"
 
 
 @register_snippet
