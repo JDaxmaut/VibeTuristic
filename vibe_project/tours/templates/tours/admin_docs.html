@@ -45,182 +45,183 @@
 <div class="nice-padding">
 <div class="vt-docs">
 
-  <h1>Руководство администратора</h1>
-  <p class="vt-lead">Краткая инструкция по работе с сайтом Vibe Turistic в Wagtail CMS.</p>
+ <h1>Руководство администратора</h1>
+ <p class="vt-lead">Краткая инструкция по работе с сайтом Vibe Turistic в Wagtail CMS.</p>
 
-  <!-- TOURS -->
-  <div class="vt-section open" id="s-tours">
-    <div class="vt-section-head" onclick="vtToggle('s-tours')">
-      <span class="vt-section-icon" style="background:#eff6ff">🗺️</span>
-      <h2>Туры</h2>
-      <span class="vt-badge">Основное</span>
-      <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="vt-body">
-      <p class="vt-intro">Туры — это страницы Wagtail. Открой <strong>Страницы → (главная) → нужный тур → Изменить</strong>.</p>
-      <p style="font-size:13px;font-weight:600;margin:0 0 10px;color:#111">Вкладки редактора тура:</p>
-      <div class="vt-grid">
-        <div class="vt-card">
-          <h4>📝 Содержимое</h4>
-          <p>Название, описание, программа по дням, изображения, что входит / не входит, памятка, дисклеймер, галерея.</p>
-        </div>
-        <div class="vt-card">
-          <h4>📅 Расписание</h4>
-          <p>Заезды этого тура: даты, кол-во мест, статус. Добавленные здесь даты сразу видны на главной и странице тура.</p>
-        </div>
-        <div class="vt-card">
-          <h4>🔍 Продвижение</h4>
-          <p>Slug (URL страницы), SEO-заголовок, мета-описание. Слаг лучше не менять после первой публикации.</p>
-        </div>
-        <div class="vt-card">
-          <h4>🖼 Изображения</h4>
-          <p>Hero-фото, карточка для главной, фото для блоков «Что входит» и «Что не входит». Только JPEG, мин. 1200×800 px.</p>
-        </div>
-      </div>
-      <div class="vt-tip">
-        <strong>💡 Совет:</strong> чтобы тур появился на сайте, нажми <strong>«Опубликовать»</strong> внизу редактора. «Сохранить черновик» — изменения не видны посетителям.
-      </div>
-    </div>
-  </div>
+ <!-- TOURS -->
+ <div class="vt-section open" id="s-tours">
+ <div class="vt-section-head" onclick="vtToggle('s-tours')">
+ <span class="vt-section-icon" style="background:#eff6ff"></span>
+ <h2>Туры</h2>
 
-  <!-- SCHEDULE -->
-  <div class="vt-section" id="s-schedule">
-    <div class="vt-section-head" onclick="vtToggle('s-schedule')">
-      <span class="vt-section-icon" style="background:#fff7ed">📅</span>
-      <h2>Расписание заездов</h2>
-      <span class="vt-badge">Часто</span>
-      <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="vt-body">
-      <ol class="vt-steps">
-        <li><span class="vt-num">1</span><p>Открой тур: <strong>Страницы → тур → Изменить</strong></p></li>
-        <li><span class="vt-num">2</span><p>Перейди на вкладку <strong>Расписание</strong></p></li>
-        <li><span class="vt-num">3</span><p>Нажми <strong>«Добавить заезд»</strong> — укажи дату начала, дату конца, кол-во мест и статус</p></li>
-        <li><span class="vt-num">4</span><p>Нажми <strong>«Опубликовать»</strong> — заезд мгновенно появляется на сайте</p></li>
-      </ol>
-      <p style="font-size:13px;font-weight:600;margin:18px 0 8px;color:#111">Статусы:</p>
-      <table class="vt-table">
-        <thead><tr><th>Статус</th><th>Что видит пользователь</th><th>Когда использовать</th></tr></thead>
-        <tbody>
-          <tr><td><span class="vt-tag g">есть места</span></td><td>«18 мест»</td><td>Группа свободна</td></tr>
-          <tr><td><span class="vt-tag y">мало мест</span></td><td>«2 мест»</td><td>Осталось 1–3 места</td></tr>
-          <tr><td><span class="vt-tag r">нет мест</span></td><td>«нет мест»</td><td>Группа закрыта</td></tr>
-        </tbody>
-      </table>
-      <div class="vt-tip">
-        <strong>⚡ Быстрый доступ:</strong> все заезды всех туров сразу — боковое меню → <strong>Снипеты → Заезды</strong>.
-      </div>
-    </div>
-  </div>
+ <span class="vt-badge">Основное</span>
+ <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+ </div>
+ <div class="vt-body">
+ <p class="vt-intro">Туры — это страницы Wagtail. Открой <strong>Страницы → (главная) → нужный тур → Изменить</strong>.</p>
+ <p style="font-size:13px;font-weight:600;margin:0 0 10px;color:#111">Вкладки редактора тура:</p>
+ <div class="vt-grid">
+ <div class="vt-card">
+ <h4> Содержимое</h4>
+ <p>Название, описание, программа по дням, изображения, что входит / не входит, памятка, дисклеймер, галерея.</p>
+ </div>
+ <div class="vt-card">
+ <h4> Расписание</h4>
+ <p>Заезды этого тура: даты, кол-во мест, статус. Добавленные здесь даты сразу видны на главной и странице тура.</p>
+ </div>
+ <div class="vt-card">
+ <h4> Продвижение</h4>
+ <p>Slug (URL страницы), SEO-заголовок, мета-описание. Слаг лучше не менять после первой публикации.</p>
+ </div>
+ <div class="vt-card">
+ <h4> Изображения</h4>
+ <p>Hero-фото, карточка для главной, фото для блоков «Что входит» и «Что не входит». Только JPEG, мин. 1200×800 px.</p>
+ </div>
+ </div>
+ <div class="vt-tip">
+ <strong> Совет:</strong> чтобы тур появился на сайте, нажми <strong>«Опубликовать»</strong> внизу редактора. «Сохранить черновик» — изменения не видны посетителям.
+ </div>
+ </div>
+ </div>
 
-  <!-- HOME PAGE -->
-  <div class="vt-section" id="s-home">
-    <div class="vt-section-head" onclick="vtToggle('s-home')">
-      <span class="vt-section-icon" style="background:#f0fdf4">🏠</span>
-      <h2>Главная страница</h2>
-      <span class="vt-badge">Контент</span>
-      <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="vt-body">
-      <p class="vt-intro">Открой: <strong>Страницы → главная страница → Изменить</strong>.</p>
-      <table class="vt-table">
-        <thead><tr><th>Поле</th><th>Где отображается</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Заголовок героя</strong></td><td>Тег &lt;title&gt; в браузере</td></tr>
-          <tr><td><strong>Лента (бейдж)</strong></td><td>Жёлтая таблетка под логотипом</td></tr>
-          <tr><td><strong>Подзаголовок</strong></td><td>Текст под лентой</td></tr>
-          <tr><td><strong>Фоновое фото (hero_bg)</strong></td><td>Панорама гор внизу героя</td></tr>
-        </tbody>
-      </table>
-      <div class="vt-tip">
-        <strong>📌</strong> Отзывы и карточки «Почему мы» — в разделе <strong>Снипеты</strong>. Туры выводятся автоматически из опубликованных страниц туров.
-      </div>
-    </div>
-  </div>
+ <!-- SCHEDULE -->
+ <div class="vt-section" id="s-schedule">
+ <div class="vt-section-head" onclick="vtToggle('s-schedule')">
+ <span class="vt-section-icon" style="background:#fff7ed"></span>
+ <h2>Расписание заездов</h2>
+ <span class="vt-badge">Часто</span>
+ <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+ </div>
+ <div class="vt-body">
+ <ol class="vt-steps">
+ <li><span class="vt-num">1</span><p>Открой тур: <strong>Страницы → тур → Изменить</strong></p></li>
+ <li><span class="vt-num">2</span><p>Перейди на вкладку <strong>Расписание</strong></p></li>
+ <li><span class="vt-num">3</span><p>Нажми <strong>«Добавить заезд»</strong> — укажи дату начала, дату конца, кол-во мест и статус</p></li>
+ <li><span class="vt-num">4</span><p>Нажми <strong>«Опубликовать»</strong> — заезд мгновенно появляется на сайте</p></li>
+ </ol>
+ <p style="font-size:13px;font-weight:600;margin:18px 0 8px;color:#111">Статусы:</p>
+ <table class="vt-table">
+ <thead><tr><th>Статус</th><th>Что видит пользователь</th><th>Когда использовать</th></tr></thead>
+ <tbody>
+ <tr><td><span class="vt-tag g">есть места</span></td><td>«18 мест»</td><td>Группа свободна</td></tr>
+ <tr><td><span class="vt-tag y">мало мест</span></td><td>«2 мест»</td><td>Осталось 1–3 места</td></tr>
+ <tr><td><span class="vt-tag r">нет мест</span></td><td>«нет мест»</td><td>Группа закрыта</td></tr>
+ </tbody>
+ </table>
+ <div class="vt-tip">
+ <strong> Быстрый доступ:</strong> все заезды всех туров сразу — боковое меню → <strong>Снипеты → Заезды</strong>.
+ </div>
+ </div>
+ </div>
 
-  <!-- SNIPPETS -->
-  <div class="vt-section" id="s-snippets">
-    <div class="vt-section-head" onclick="vtToggle('s-snippets')">
-      <span class="vt-section-icon" style="background:#fdf4ff">✂️</span>
-      <h2>Снипеты</h2>
-      <span class="vt-badge">Отзывы / Контент</span>
-      <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="vt-body">
-      <div class="vt-grid">
-        <div class="vt-card">
-          <h4>⭐ Отзывы</h4>
-          <p>Имя, город, рейтинг 1–5, текст отзыва, цвет аватара (HEX). Все отзывы выводятся в разделе «Отзывы» на главной.</p>
-        </div>
-        <div class="vt-card">
-          <h4>🔥 Почему мы</h4>
-          <p>Иконка, цвет темы, заголовок, текст. Карточки блока «Почему Vibe Turistic». Порядок — поле «Порядок».</p>
-        </div>
-        <div class="vt-card">
-          <h4>📅 Заезды</h4>
-          <p>Глобальный список всех заездов. Удобен для массового обновления статусов перед сезоном.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+ <!-- HOME PAGE -->
+ <div class="vt-section" id="s-home">
+ <div class="vt-section-head" onclick="vtToggle('s-home')">
+ <span class="vt-section-icon" style="background:#f0fdf4"></span>
+ <h2>Главная страница</h2>
+ <span class="vt-badge">Контент</span>
+ <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+ </div>
+ <div class="vt-body">
+ <p class="vt-intro">Открой: <strong>Страницы → главная страница → Изменить</strong>.</p>
+ <table class="vt-table">
+ <thead><tr><th>Поле</th><th>Где отображается</th></tr></thead>
+ <tbody>
+ <tr><td><strong>Заголовок героя</strong></td><td>Тег &lt;title&gt; в браузере</td></tr>
+ <tr><td><strong>Лента (бейдж)</strong></td><td>Жёлтая таблетка под логотипом</td></tr>
+ <tr><td><strong>Подзаголовок</strong></td><td>Текст под лентой</td></tr>
+ <tr><td><strong>Фоновое фото (hero_bg)</strong></td><td>Панорама гор внизу героя</td></tr>
+ </tbody>
+ </table>
+ <div class="vt-tip">
+ <strong></strong> Отзывы и карточки «Почему мы» — в разделе <strong>Снипеты</strong>. Туры выводятся автоматически из опубликованных страниц туров.
+ </div>
+ </div>
+ </div>
 
-  <!-- SETTINGS -->
-  <div class="vt-section" id="s-settings">
-    <div class="vt-section-head" onclick="vtToggle('s-settings')">
-      <span class="vt-section-icon" style="background:#f1f5f9">⚙️</span>
-      <h2>Настройки сайта</h2>
-      <span class="vt-badge">Редко</span>
-      <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="vt-body">
-      <p class="vt-intro">Боковое меню → <strong>Настройки → Настройки сайта</strong>.</p>
-      <table class="vt-table">
-        <thead><tr><th>Поле</th><th>Где показывается</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Telegram / VK / WhatsApp</strong></td><td>Кнопки соцсетей в шапке и футере</td></tr>
-          <tr><td><strong>Рейтинг</strong></td><td>Вкладка «Отзывы» в навигации: «5.0 ★»</td></tr>
-          <tr><td><strong>Кол-во отзывов</strong></td><td>Блок «Отзывы» на главной странице</td></tr>
-          <tr><td><strong>Текст cookie-баннера</strong></td><td>Всплывающий баннер внизу справа</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+ <!-- SNIPPETS -->
+ <div class="vt-section" id="s-snippets">
+ <div class="vt-section-head" onclick="vtToggle('s-snippets')">
+ <span class="vt-section-icon" style="background:#fdf4ff"></span>
+ <h2>Снипеты</h2>
+ <span class="vt-badge">Отзывы / Контент</span>
+ <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+ </div>
+ <div class="vt-body">
+ <div class="vt-grid">
+ <div class="vt-card">
+ <h4> Отзывы</h4>
+ <p>Имя, город, рейтинг 1–5, текст отзыва, цвет аватара (HEX). Все отзывы выводятся в разделе «Отзывы» на главной.</p>
+ </div>
+ <div class="vt-card">
+ <h4> Почему мы</h4>
+ <p>Иконка, цвет темы, заголовок, текст. Карточки блока «Почему Vibe Turistic». Порядок — поле «Порядок».</p>
+ </div>
+ <div class="vt-card">
+ <h4> Заезды</h4>
+ <p>Глобальный список всех заездов. Удобен для массового обновления статусов перед сезоном.</p>
+ </div>
+ </div>
+ </div>
+ </div>
 
-  <!-- IMAGES -->
-  <div class="vt-section" id="s-images">
-    <div class="vt-section-head" onclick="vtToggle('s-images')">
-      <span class="vt-section-icon" style="background:#fff1f2">🖼</span>
-      <h2>Изображения</h2>
-      <span class="vt-badge">Медиа</span>
-      <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="vt-body">
-      <ol class="vt-steps">
-        <li><span class="vt-num">1</span><p>Боковое меню → <strong>Изображения</strong> → «Добавить изображение»</p></li>
-        <li><span class="vt-num">2</span><p>После загрузки изображение появится в библиотеке</p></li>
-        <li><span class="vt-num">3</span><p>В редакторе тура нажми на поле изображения и выбери из библиотеки</p></li>
-      </ol>
-      <table class="vt-table" style="margin-top:16px">
-        <thead><tr><th>Где</th><th>Минимальный размер</th></tr></thead>
-        <tbody>
-          <tr><td>Hero тура или главной</td><td>1900×1100 px</td></tr>
-          <tr><td>Карточка тура на главной</td><td>900×600 px</td></tr>
-          <tr><td>Блок «Что входит / не входит»</td><td>900×720 px</td></tr>
-          <tr><td>Галерея тура</td><td>800×600 px</td></tr>
-        </tbody>
-      </table>
-      <div class="vt-tip">
-        <strong>⚠️</strong> Загружай только <strong>JPEG</strong>-фотографии. PNG с прозрачностью может отображаться некорректно.
-      </div>
-    </div>
-  </div>
+ <!-- SETTINGS -->
+ <div class="vt-section" id="s-settings">
+ <div class="vt-section-head" onclick="vtToggle('s-settings')">
+ <span class="vt-section-icon" style="background:#f1f5f9"></span>
+ <h2>Настройки сайта</h2>
+ <span class="vt-badge">Редко</span>
+ <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+ </div>
+ <div class="vt-body">
+ <p class="vt-intro">Боковое меню → <strong>Настройки → Настройки сайта</strong>.</p>
+ <table class="vt-table">
+ <thead><tr><th>Поле</th><th>Где показывается</th></tr></thead>
+ <tbody>
+ <tr><td><strong>Telegram / VK / WhatsApp</strong></td><td>Кнопки соцсетей в шапке и футере</td></tr>
+ <tr><td><strong>Рейтинг</strong></td><td>Вкладка «Отзывы» в навигации: «5.0 »</td></tr>
+ <tr><td><strong>Кол-во отзывов</strong></td><td>Блок «Отзывы» на главной странице</td></tr>
+ <tr><td><strong>Текст cookie-баннера</strong></td><td>Всплывающий баннер внизу справа</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- IMAGES -->
+ <div class="vt-section" id="s-images">
+ <div class="vt-section-head" onclick="vtToggle('s-images')">
+ <span class="vt-section-icon" style="background:#fff1f2"></span>
+ <h2>Изображения</h2>
+ <span class="vt-badge">Медиа</span>
+ <svg class="vt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+ </div>
+ <div class="vt-body">
+ <ol class="vt-steps">
+ <li><span class="vt-num">1</span><p>Боковое меню → <strong>Изображения</strong> → «Добавить изображение»</p></li>
+ <li><span class="vt-num">2</span><p>После загрузки изображение появится в библиотеке</p></li>
+ <li><span class="vt-num">3</span><p>В редакторе тура нажми на поле изображения и выбери из библиотеки</p></li>
+ </ol>
+ <table class="vt-table" style="margin-top:16px">
+ <thead><tr><th>Где</th><th>Минимальный размер</th></tr></thead>
+ <tbody>
+ <tr><td>Hero тура или главной</td><td>1900×1100 px</td></tr>
+ <tr><td>Карточка тура на главной</td><td>900×600 px</td></tr>
+ <tr><td>Блок «Что входит / не входит»</td><td>900×720 px</td></tr>
+ <tr><td>Галерея тура</td><td>800×600 px</td></tr>
+ </tbody>
+ </table>
+ <div class="vt-tip">
+ <strong></strong> Загружай только <strong>JPEG</strong>-фотографии. PNG с прозрачностью может отображаться некорректно.
+ </div>
+ </div>
+ </div>
 
 </div>
 </div>
 
 <script>
 function vtToggle(id) {
-  document.getElementById(id).classList.toggle('open');
+ document.getElementById(id).classList.toggle('open');
 }
 </script>
 {% endblock %}
