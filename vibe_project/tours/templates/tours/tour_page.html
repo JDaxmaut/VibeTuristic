@@ -6,7 +6,7 @@
 {% block body %}
 <header class="tourhead">
   {% if page.hero_image %}
-    {% image page.hero_image fill-1900x1100 format-webp class="tourhead__bg" alt=page.title %}
+    {% image page.hero_image fill-1900x1100 class="tourhead__bg" alt=page.title %}
   {% else %}
     <img class="tourhead__bg" src="{% static 'img/tour-default.jpg' %}" alt="{{ page.title }}">
   {% endif %}
@@ -131,7 +131,7 @@
               {% if page.included_image %}
               <div class="photoframe" style="margin-bottom:22px;margin-top:4px">
                 <span class="tape"></span>
-                {% image page.included_image fill-900x720 format-webp alt="Что входит в тур" loading="lazy" decoding="async" %}
+                {% image page.included_image fill-900x720 alt="Что входит в тур" loading="lazy" decoding="async" %}
               </div>
               {% endif %}
               <ul class="checklist checklist--in">
@@ -164,7 +164,7 @@
               {% if page.excluded_image %}
               <div class="photoframe" style="margin-bottom:22px;margin-top:4px">
                 <span class="tape" style="background:var(--pop)"></span>
-                {% image page.excluded_image fill-900x720 format-webp alt="Не входит в тур" loading="lazy" decoding="async" %}
+                {% image page.excluded_image fill-900x720 alt="Не входит в тур" loading="lazy" decoding="async" %}
               </div>
               {% endif %}
               <ul class="checklist checklist--out">
@@ -236,7 +236,7 @@
       <div class="tour-gallery reveal">
         {% for photo in page.gallery_photos.all %}
           <div class="tour-gallery__item">
-            {% image photo.image fill-800x600 format-webp class="tour-gallery__img" alt=photo.caption loading="lazy" decoding="async" %}
+            {% image photo.image fill-800x600 class="tour-gallery__img" alt=photo.caption loading="lazy" decoding="async" %}
             {% if photo.caption %}<p class="tour-gallery__cap">{{ photo.caption }}</p>{% endif %}
           </div>
         {% endfor %}
