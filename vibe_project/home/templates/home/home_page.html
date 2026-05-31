@@ -4,15 +4,15 @@
 {% block title %}{{ page.hero_headline }}{% endblock %}
 
 {% block body %}
-{% image page.hero_bg fill-1900x1100 as hero_bg %}
+{% image page.hero_bg fill-1900x1100 format-webp as hero_bg %}
 
 <header class="hero" id="top">
   <div class="hero__sky"></div>
   <div class="hero__clouds"></div>
   {% if hero_bg %}
-    <img class="hero__pano" src="{{ hero_bg.url }}" alt="Горы Дагестана">
+    <img class="hero__pano" src="{{ hero_bg.url }}" alt="Горы Дагестана" fetchpriority="high">
   {% else %}
-    <img class="hero__pano" src="{% static 'img/hero-default.jpg' %}" alt="Горы Дагестана">
+    <img class="hero__pano" src="{% static 'img/hero-default.webp' %}" alt="Горы Дагестана" fetchpriority="high">
   {% endif %}
 
   <div class="hero__topbar">
@@ -37,10 +37,10 @@
 
   <svg class="hero__eagle"><use href="{% static 'img/sprite.svg' %}#eagle"></use></svg>
 
-  <figure class="pola pola--1"><img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=420&q=80" alt=""><figcaption>наш вайб ✦</figcaption></figure>
-  <figure class="pola pola--2"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=380&q=80" alt=""><figcaption>каньон</figcaption></figure>
-  <figure class="pola pola--3"><img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=420&q=80" alt=""><figcaption>на воде</figcaption></figure>
-  <figure class="pola pola--4"><img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=380&q=80" alt=""><figcaption>водопад</figcaption></figure>
+  <figure class="pola pola--1"><img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=420&q=80" alt="" decoding="async"><figcaption>наш вайб ✦</figcaption></figure>
+  <figure class="pola pola--2"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=380&q=80" alt="" decoding="async"><figcaption>каньон</figcaption></figure>
+  <figure class="pola pola--3"><img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=420&q=80" alt="" decoding="async"><figcaption>на воде</figcaption></figure>
+  <figure class="pola pola--4"><img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=380&q=80" alt="" decoding="async"><figcaption>водопад</figcaption></figure>
 
   <div class="hero__center">
     <div class="wordmark">
@@ -113,9 +113,9 @@
         <a class="tcard{% if tour.is_custom %} indiv{% endif %}" href="{% pageurl tour %}">
           <div class="tcard__media">
             {% if tour.card_image %}
-              {% image tour.card_image fill-900x600 alt=tour.title %}
+              {% image tour.card_image fill-900x600 format-webp alt=tour.title loading="lazy" decoding="async" %}
             {% else %}
-              <img src="{% static 'img/tour-default.jpg' %}" alt="{{ tour.title }}">
+              <img src="{% static 'img/tour-default.jpg' %}" alt="{{ tour.title }}" loading="lazy" decoding="async">
             {% endif %}
             {% if tour.badge %}<span class="tcard__badge">{{ tour.badge }}</span>{% endif %}
             <span class="tcard__dur"><svg class="i" style="width:18px"><use href="{% static 'img/sprite.svg' %}#i-mountain"></use></svg> {{ tour.duration_label }}</span>

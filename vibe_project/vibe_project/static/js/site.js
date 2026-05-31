@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  /* ---- Tab nav: scroll-to section ---- */
   var tabs = document.querySelectorAll('.tab');
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
@@ -8,19 +9,48 @@
       if (el) window.scrollTo({ top: el.offsetTop - 86, behavior: 'smooth' });
     });
   });
-  var sections = ['program', 'schedule', 'reviews', 'why', 'dresscode', 'ask'].map(function (id) { return document.getElementById(id); });
+
+  var sections = ['program', 'schedule', 'reviews', 'why', 'dresscode', 'ask']
+    .map(function (id) { return document.getElementById(id); });
+
+  /* RAF-throttle: запускаем обработчик максимум 1 раз за кадр,
+     не блокируем главный поток при быстром скролле */
+  var _rafPending = false;
   function onScroll() {
-    var y = window.scrollY + 140, active = null;
-    sections.forEach(function (s) { if (s && s.offsetTop <= y) active = s.id; });
-    tabs.forEach(function (t) { t.classList.toggle('is-active', t.getAttribute('data-target') === active); });
+    if (_rafPending) return;
+    _rafPending = true;
+    requestAnimationFrame(function () {
+      _rafPending = false;
+      var y = window.scrollY + 140, active = null;
+      sections.forEach(function (s) { if (s && s.offsetTop <= y) active = s.id; });
+      tabs.forEach(function (t) {
+        t.classList.toggle('is-active', t.getAttribute('data-target') === active);
+      });
+    });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  /* ---- Reveal on scroll ---- */
   var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
   }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
+  /* ---- Accordion — GPU-safe open/close via grid-template-rows ----
+     Нет анимации height → нет Layout/Reflow на всей странице.
+     Стрелка анимируется только через transform (compositor thread). */
+  document.querySelectorAll('.acc-head').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = this.closest('.acc-item');
+      var willOpen = !item.classList.contains('open');
+      item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  });
+
+  /* ---- Booking form ---- */
   var form = document.getElementById('askform');
   if (form) {
     var ca = Math.floor(Math.random() * 8) + 2;
@@ -54,7 +84,10 @@
 
       fetch('/booking/submit/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+        },
         body: JSON.stringify(data)
       }).then(function (r) { return r.json(); }).then(function (resp) {
         if (resp.ok) {
@@ -74,12 +107,11 @@
     });
   }
 
+  /* ---- Cookie banner ---- */
   var cookie = document.getElementById('cookie');
   if (cookie) {
     try {
-      if (!localStorage.getItem('vt_cookie_ok')) {
-        cookie.hidden = false;
-      }
+      if (!localStorage.getItem('vt_cookie_ok')) { cookie.hidden = false; }
     } catch (e) { cookie.hidden = false; }
     var ok = document.getElementById('cookie-ok');
     if (ok) ok.addEventListener('click', function () {
@@ -90,7 +122,7 @@
 
   onScroll();
 
-  // Mobile bottom nav: hide on scroll down, show on scroll up
+  /* ---- Mobile bottom nav: hide on scroll down, show on scroll up ---- */
   var tabnav = document.getElementById('tabnav');
   var mobBtn = document.querySelector('.mob-book-btn');
   if (tabnav && window.matchMedia('(max-width:640px)').matches) {
