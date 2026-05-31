@@ -813,14 +813,6 @@ a{color:inherit;text-decoration:none}
   .acc-item.open .acc-inner{padding-bottom:18px}
 }
 
-/* ============================================================
-   PAINT DEFERRAL — content-visibility для секций ниже экрана
-   Браузер пропускает рендер невидимых блоков, экономя CPU/GPU
-   ============================================================ */
-#schedule,#reviews,#why,#dresscode,#ask{
-  content-visibility:auto;
-  contain-intrinsic-size:auto 700px
-}
 
 /* ============================================================
    RESPONSIVE
