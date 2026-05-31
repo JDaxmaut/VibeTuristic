@@ -60,8 +60,7 @@
             </div>
             <span class="seats {{ d.status }}">
               {% if d.status == "full" %}нет мест
-              {% elif d.status == "low" %}{{ d.seats_left }} мест
-              {% else %}есть места{% endif %}
+              {% else %}{{ d.seats_left }} мест{% endif %}
             </span>
           </div>
         {% endfor %}
