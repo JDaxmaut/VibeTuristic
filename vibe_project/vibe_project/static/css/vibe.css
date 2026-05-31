@@ -811,6 +811,32 @@ a{color:inherit;text-decoration:none}
   .acc-item.open .acc-inner{padding-bottom:18px}
 }
 
+/* Day-number badge (itinerary accordion) */
+.acc-day-num{
+  width:44px;height:44px;border-radius:13px;display:grid;place-items:center;
+  flex:0 0 auto;background:var(--sky-1);color:var(--blue-deep);
+  font-family:var(--font-disp);font-weight:800;font-size:17px;line-height:1;
+  border:1.5px solid var(--sky-2);
+  transition:background .35s cubic-bezier(.4,0,.2,1),color .35s ease,border-color .35s ease
+}
+.acc-item--day.open .acc-day-num{
+  background:var(--blue);color:#fff;border-color:var(--blue-deep);
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.16)
+}
+
+/* Richtext in accordion body + tour description block */
+.acc-inner .richtext p,.tour-desc p{margin:0 0 14px;font-size:15px;line-height:1.65;color:var(--ink-2)}
+.acc-inner .richtext p:first-child,.tour-desc p:first-child{margin-top:0}
+.acc-inner .richtext p:last-child,.tour-desc p:last-child{margin-bottom:0}
+.acc-inner .richtext ul,.acc-inner .richtext ol,.tour-desc ul,.tour-desc ol{
+  margin:0 0 14px;padding-left:22px}
+.acc-inner .richtext li,.tour-desc li{font-size:15px;line-height:1.55;color:var(--ink-2);margin-bottom:6px}
+.acc-inner .richtext strong,.tour-desc strong,.acc-inner .richtext b,.tour-desc b{
+  font-weight:700;color:var(--ink)}
+.acc-inner .richtext h3,.acc-inner .richtext h4{
+  font-family:var(--font-disp);font-weight:700;color:var(--ink);margin:16px 0 8px;font-size:clamp(15px,1.4vw,18px)}
+.tour-desc{max-width:78ch;font-size:clamp(15px,1.4vw,18px);line-height:1.65;color:var(--ink-2)}
+
 
 /* ============================================================
    RESPONSIVE

@@ -105,11 +105,52 @@
     </div>
   </section>
 
+  {% if page.description %}
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">03 — о туре</span>
+        <h2 class="h-section">Описание <span class="hl">тура</span></h2>
+      </div>
+      <div class="tour-desc reveal">{{ page.description|richtext }}</div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if page.itinerary_days.all %}
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">04 — маршрут</span>
+        <h2 class="h-section">Программа <span class="hl">по дням</span></h2>
+      </div>
+      <div class="acc-list reveal">
+        {% for day in page.itinerary_days.all %}
+        <div class="acc-item acc-item--day{% if forloop.first %} open{% endif %}">
+          <button class="acc-head" type="button" aria-expanded="{{ forloop.first|yesno:'true,false' }}">
+            <span class="acc-day-num">{{ forloop.counter }}</span>
+            <span class="acc-title">{{ day.title }}{% if day.subtitle %}<small>{{ day.subtitle }}</small>{% endif %}</span>
+            <span class="acc-arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-inner">
+              {{ day.description|richtext }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
   {% if page.included_items.all or page.excluded_items.all or page.packing_items.all %}
   <section class="section" style="padding-top:0">
     <div class="wrap">
       <div class="section__head reveal">
-        <span class="eyebrow">03–05 — программа тура</span>
+        <span class="eyebrow">05–07 — детали программы</span>
         <h2 class="h-section">Детали <span class="hl">программы</span></h2>
       </div>
 

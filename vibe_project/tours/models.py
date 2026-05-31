@@ -153,6 +153,7 @@ class TourPage(Page):
         related_name="+",
     )
 
+    description = RichTextField("Описание тура", blank=True)
     important_note = RichTextField("Что важно знать (дисклеймер)", blank=True)
 
     content_panels = Page.content_panels + [
@@ -185,6 +186,8 @@ class TourPage(Page):
             ],
             heading="Изображения",
         ),
+        FieldPanel("description"),
+        InlinePanel("itinerary_days", heading="Программа по дням"),
         InlinePanel("included_items", heading="Что входит"),
         InlinePanel("excluded_items", heading="Что НЕ входит"),
         InlinePanel("packing_items", heading="Что взять с собой"),
@@ -258,6 +261,28 @@ class TourGalleryPhoto(Orderable):
 
     def __str__(self):
         return self.caption or str(self.image)
+
+
+class ItineraryDay(Orderable):
+    page = ParentalKey(
+        TourPage, related_name="itinerary_days", on_delete=models.CASCADE
+    )
+    title = models.CharField("Заголовок дня", max_length=200)
+    subtitle = models.CharField("Краткое описание (под заголовком)", max_length=200, blank=True)
+    description = RichTextField("Описание дня")
+
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("subtitle"),
+        FieldPanel("description"),
+    ]
+
+    class Meta:
+        verbose_name = "День маршрута"
+        verbose_name_plural = "Дни маршрута"
+
+    def __str__(self):
+        return self.title
 
 
 class DepartureQuerySet(models.QuerySet):
