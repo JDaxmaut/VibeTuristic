@@ -62,30 +62,42 @@ class HomePage(Page):
         from collections import defaultdict
 
         ctx = super().get_context(request)
-        tours = TourPage.objects.live().child_of(self).order_by("-duration_days")
+
+        # select_related('card_image') prevents N+1 FK hits in template
+        tours = list(
+            TourPage.objects.live()
+            .child_of(self)
+            .select_related("card_image")
+            .order_by("-duration_days")
+        )
         ctx["tours"] = tours
         ctx["reviews"] = Review.objects.all()
         ctx["why_items"] = WhyUsItem.objects.all()
         ctx["legal_pages"] = LegalPage.objects.live()
 
+        # Single query for ALL upcoming departures — covers both schedule
+        # display and the booking-form JSON payload (no per-tour sub-queries)
+        upcoming = list(
+            Departure.objects.upcoming()
+            .select_related("tour")
+            .order_by("date_from")
+        )
+
         months = defaultdict(list)
-        for d in Departure.objects.upcoming():
+        for d in upcoming:
             months[(d.date_from.year, d.date_from.month)].append(d)
         ctx["schedule"] = sorted(months.items())
 
-        # Per-tour departure dates for the booking form (passed as dict, rendered via json_script)
-        tours_dep = {}
-        for t in tours:
-            deps = Departure.objects.upcoming().filter(tour=t).order_by("date_from")
-            tours_dep[str(t.pk)] = [
-                {
+        tour_ids = {t.pk for t in tours}
+        tours_dep = {str(t.pk): [] for t in tours}
+        for d in upcoming:
+            if d.tour_id in tour_ids:
+                tours_dep[str(d.tour_id)].append({
                     "value": str(d.pk),
                     "from": d.date_from.isoformat(),
                     "to": d.date_to.isoformat(),
                     "status": d.status,
-                }
-                for d in deps
-            ]
+                })
         ctx["tours_departures"] = tours_dep
         return ctx
 
