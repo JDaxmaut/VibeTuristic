@@ -21,10 +21,14 @@ if settings.DEBUG:
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     urlpatterns += staticfiles_urlpatterns()
 
-# Media files served by Django in local dev (both DEBUG modes).
-# In production replace with nginx/S3.
-from django.conf.urls.static import static
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files in dev regardless of DEBUG.
+# django.conf.urls.static.static() silently returns [] when DEBUG=False,
+# so we wire up the serve view directly. Replace with nginx/S3 in production.
+from django.urls import re_path
+from django.views.static import serve as _serve
+urlpatterns += [
+    re_path(r"^media/(?P<path>.*)$", _serve, {"document_root": settings.MEDIA_ROOT}),
+]
 
 urlpatterns = urlpatterns + [
     path("", include(wagtail_urls)),
