@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -103,7 +104,11 @@ STORAGES = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        # CompressedStaticFilesStorage: creates .gz/.br sidecar files for each
+        # static asset so WhiteNoise serves pre-compressed responses.
+        # (CompressedManifestStaticFilesStorage would also add content-hash
+        #  fingerprints, but it breaks on the Tailwind v4 source file in css/src/.)
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 

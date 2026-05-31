@@ -17,18 +17,15 @@ urlpatterns = [
     path("booking/submit/", booking_submit, name="booking_submit"),
 ]
 
-if settings.DEBUG:
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-    urlpatterns += staticfiles_urlpatterns()
-
-# Serve media files in dev regardless of DEBUG.
-# django.conf.urls.static.static() silently returns [] when DEBUG=False,
-# so we wire up the serve view directly. Replace with nginx/S3 in production.
-from django.urls import re_path
-from django.views.static import serve as _serve
-urlpatterns += [
-    re_path(r"^media/(?P<path>.*)$", _serve, {"document_root": settings.MEDIA_ROOT}),
-]
+# Static files served by WhiteNoise middleware (no URL patterns needed).
+# Media files: served via Django's serve view in local dev only.
+# In production replace with nginx / object storage.
+if not settings.MEDIA_URL.startswith("http"):
+    from django.urls import re_path
+    from django.views.static import serve as _serve
+    urlpatterns += [
+        re_path(r"^media/(?P<path>.*)$", _serve, {"document_root": settings.MEDIA_ROOT}),
+    ]
 
 urlpatterns = urlpatterns + [
     path("", include(wagtail_urls)),
