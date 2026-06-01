@@ -1,7 +1,12 @@
+import os
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = PROJECT_DIR.parent
+
+# В Docker монтируется том по пути DATA_DIR=/app/data.
+# Локально по умолчанию совпадает с BASE_DIR — база и медиа на месте.
+DATA_DIR = Path(os.environ.get("DATA_DIR", BASE_DIR))
 
 INSTALLED_APPS = [
     "home",
@@ -28,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
 ]
 
 MIDDLEWARE = [
@@ -68,7 +74,7 @@ WSGI_APPLICATION = "vibe_project.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DATA_DIR / "db.sqlite3",
     }
 }
 
@@ -96,7 +102,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = DATA_DIR / "media"
 MEDIA_URL = "/media/"
 
 STORAGES = {

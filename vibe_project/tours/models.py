@@ -47,6 +47,7 @@ class HomePage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
+        verbose_name="Фон героя",
     )
 
     content_panels = Page.content_panels + [
@@ -133,6 +134,7 @@ class TourPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
+        verbose_name="Главное фото (баннер)",
     )
     card_image = models.ForeignKey(
         "wagtailimages.Image",
@@ -140,6 +142,7 @@ class TourPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
+        verbose_name="Фото карточки",
     )
     included_image = models.ForeignKey(
         "wagtailimages.Image",
@@ -147,6 +150,7 @@ class TourPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
+        verbose_name="Фото блока «Что входит»",
     )
     excluded_image = models.ForeignKey(
         "wagtailimages.Image",
@@ -154,12 +158,13 @@ class TourPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
+        verbose_name="Фото блока «Что не входит»",
     )
 
     description = RichTextField("Описание тура", blank=True)
     important_note = RichTextField("Что важно знать (дисклеймер)", blank=True)
 
-    content_panels = Page.content_panels + [
+    basic_panels = Page.content_panels + [
         MultiFieldPanel(
             [
                 FieldPanel("is_custom"),
@@ -180,22 +185,39 @@ class TourPage(Page):
             ],
             heading="Цена и условия",
         ),
+        FieldPanel("description"),
+    ]
+
+    photos_panels = [
         MultiFieldPanel(
             [
                 FieldPanel("hero_image"),
                 FieldPanel("card_image"),
+            ],
+            heading="Основные фото",
+        ),
+        InlinePanel("gallery_photos", heading="Фотогалерея"),
+    ]
+
+    included_panels = [
+        MultiFieldPanel(
+            [
                 FieldPanel("included_image"),
                 FieldPanel("excluded_image"),
             ],
-            heading="Изображения",
+            heading="Фото блоков",
         ),
-        FieldPanel("description"),
-        InlinePanel("itinerary_days", heading="Программа по дням"),
         InlinePanel("included_items", heading="Что входит"),
         InlinePanel("excluded_items", heading="Что НЕ входит"),
-        InlinePanel("packing_items", heading="Что взять с собой"),
+    ]
+
+    itinerary_panels = [
+        InlinePanel("itinerary_days", heading="Программа по дням"),
+    ]
+
+    extra_panels = [
         FieldPanel("important_note"),
-        InlinePanel("gallery_photos", heading="Фотогалерея"),
+        InlinePanel("packing_items", heading="Что взять с собой"),
     ]
 
     schedule_panels = [
@@ -207,7 +229,11 @@ class TourPage(Page):
     ]
 
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading="Содержимое"),
+        ObjectList(basic_panels, heading="Основное"),
+        ObjectList(photos_panels, heading="Фото"),
+        ObjectList(included_panels, heading="Входит / Не входит"),
+        ObjectList(itinerary_panels, heading="Программа"),
+        ObjectList(extra_panels, heading="Доп. информация"),
         ObjectList(schedule_panels, heading="Расписание"),
         ObjectList(Page.promote_panels, heading="Продвижение"),
     ])

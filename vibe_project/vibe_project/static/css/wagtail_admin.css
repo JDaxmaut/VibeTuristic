@@ -1,0 +1,83 @@
+/* ═══════════════════════════════════════════════════════════════
+   Vibe Turistic — Wagtail Admin Theme
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. Основной цвет — небесно-синий вместо стандартного фиолетового ── */
+:root {
+    --w-color-primary-hue: 201;
+    --w-color-primary-saturation: 100%;
+    --w-color-primary-lightness: 43%;        /* ≈ #00a8ed */
+
+    --w-color-primary-200-hue: 201;
+    --w-color-primary-200-saturation: 100%;
+    --w-color-primary-200-lightness: 78%;
+}
+
+/* ─── 2. Сайдбар — тёмно-синий (navy) вместо чёрного ─────────────────── */
+:root {
+    --w-color-surface-menus: hsl(215, 50%, 18%);   /* глубокий navy */
+}
+
+/* ─── 3. Светлая рабочая область в тёмной теме ────────────────────────── */
+
+/* Ручной тёмный режим (.w-theme-dark на <html>) */
+.w-theme-dark {
+    --w-color-surface-page:              #f1f5f9 !important;
+    --w-color-surface-field:             #ffffff !important;
+    --w-color-surface-field-inactive:    #e2e8f0 !important;
+    --w-color-surface-header:            #f8fafc !important;
+    --w-color-surface-dashboard-panel:   #ffffff !important;
+    --w-color-surface-tooltip:           #334155 !important;
+    --w-color-surface-menu-item-active:  hsl(215, 50%, 26%) !important;
+    --w-color-surface-menus:             hsl(215, 50%, 18%) !important;
+
+    --w-color-text-label:                #1e293b !important;
+    --w-color-text-meta:                 #475569 !important;
+    --w-color-text-placeholder:          #94a3b8 !important;
+    --w-color-text-link-default:         hsl(201, 100%, 38%) !important;
+    --w-color-text-link-hover:           hsl(201, 100%, 30%) !important;
+
+    --w-color-border-furniture:          #e2e8f0 !important;
+    --w-color-border-field-default:      #cbd5e1 !important;
+    --w-color-border-field-inactive:     #e2e8f0 !important;
+    --w-color-border-field-hover:        #94a3b8 !important;
+}
+
+/* Авто-тёмный режим (системная тёмная тема) */
+@media (prefers-color-scheme: dark) {
+    .w-theme-system {
+        --w-color-surface-page:              #f1f5f9 !important;
+        --w-color-surface-field:             #ffffff !important;
+        --w-color-surface-field-inactive:    #e2e8f0 !important;
+        --w-color-surface-header:            #f8fafc !important;
+        --w-color-surface-dashboard-panel:   #ffffff !important;
+        --w-color-surface-tooltip:           #334155 !important;
+        --w-color-surface-menu-item-active:  hsl(215, 50%, 26%) !important;
+        --w-color-surface-menus:             hsl(215, 50%, 18%) !important;
+
+        --w-color-text-label:                #1e293b !important;
+        --w-color-text-meta:                 #475569 !important;
+        --w-color-text-placeholder:          #94a3b8 !important;
+        --w-color-text-link-default:         hsl(201, 100%, 38%) !important;
+        --w-color-text-link-hover:           hsl(201, 100%, 30%) !important;
+
+        --w-color-border-furniture:          #e2e8f0 !important;
+        --w-color-border-field-default:      #cbd5e1 !important;
+        --w-color-border-field-inactive:     #e2e8f0 !important;
+        --w-color-border-field-hover:        #94a3b8 !important;
+    }
+}
+
+/* ─── 4. Небольшие визуальные улучшения ───────────────────────────────── */
+
+/* Скруглённые углы у активного пункта меню */
+.sidebar-menu-item--active .sidebar-menu-item__link,
+.sidebar-menu-item__link:hover {
+    border-radius: 6px;
+}
+
+/* Чуть мягче тень у дропдаунов/тултипов */
+.w-dialog,
+.tippy-box {
+    border-radius: 8px;
+}

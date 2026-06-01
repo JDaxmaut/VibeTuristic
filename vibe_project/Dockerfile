@@ -16,12 +16,9 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install the project requirements.
+# Install the project requirements (gunicorn included).
 COPY requirements.txt /
 RUN pip install -r /requirements.txt
-
-# Install the application server.
-RUN pip install "gunicorn==25.1.0"
 
 
 # RUNTIME STAGE
@@ -50,7 +47,9 @@ EXPOSE 8000
 # 3. Add the virtual environment to PATH.
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000 \
-    PATH="/opt/venv/bin:$PATH"
+    PATH="/opt/venv/bin:$PATH" \
+    DJANGO_SETTINGS_MODULE=vibe_project.settings.production \
+    DATA_DIR=/app/data
 
 
 
@@ -71,8 +70,8 @@ COPY --chown=wagtail:wagtail . .
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
-# Collect static files.
-RUN python manage.py collectstatic --noinput --clear
+# Collect static files (dev settings avoid SECRET_KEY requirement at build time).
+RUN DJANGO_SETTINGS_MODULE=vibe_project.settings.dev python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
@@ -83,4 +82,4 @@ RUN python manage.py collectstatic --noinput --clear
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manage.py migrate --noinput; gunicorn vibe_project.wsgi:application
+CMD set -xe; mkdir -p /app/data/media; python manage.py migrate --noinput; gunicorn vibe_project.wsgi:application
