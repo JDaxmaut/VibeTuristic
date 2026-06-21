@@ -4,11 +4,15 @@ services:
     ports:
       - "8000:8000"
     environment:
-      SECRET_KEY: "vibe-turistic-temp-key-change-before-real-prod-2025"
+      SECRET_KEY: "_K5eApckqAy&1+&LhAfIKaG=HHiE#xa\mRRfqw-B0iT^yK4^Be"
       ALLOWED_HOSTS: "*"
-    volumes:
-      - app_data:/app/data
-    restart: unless-stopped
+      ADMIN_URL: "qyCRq2vxRRAjlg/"
+      DJANGO_SUPERUSER_USERNAME: "mgr_b9d3d0ee"
+      DJANGO_SUPERUSER_PASSWORD: "Vibe2025admin"
 
-volumes:
-  app_data:
+      SURVEY_ID: "6a256e9a02848f4365e833b6"
+      YANDEX_FORMS_TOKEN: "y0__wgBEPiomPIIGMScQyCLvZHsF0DF4tq2w5CE5VkkyPLEV1fj8ily"
+    volumes:
+      - ./db.sqlite3:/app/data/db.sqlite3
+      - ./media:/app/data/media
+    restart: unless-stopped

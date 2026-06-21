@@ -10,14 +10,17 @@
   <div class="hero__sky"></div>
   <div class="hero__clouds"></div>
   {% if hero_bg %}
-    <img class="hero__pano" src="{{ hero_bg.url }}" alt="Горы Дагестана" fetchpriority="high">
+    <img class="hero__pano" src="{{ hero_bg.url }}" alt="Дагестан" fetchpriority="high" loading="eager" decoding="async">
   {% else %}
-    <img class="hero__pano" src="{% static 'img/hero-default.webp' %}" alt="Горы Дагестана" fetchpriority="high">
+    <picture>
+      <source srcset="{% static 'img/bgm.webp' %}" media="(max-width:640px)">
+      <img class="hero__pano" src="{% static 'img/bg.webp' %}" alt="Дагестан" fetchpriority="high" loading="eager" decoding="async">
+    </picture>
   {% endif %}
 
   <div class="hero__topbar">
     <a class="brand" href="#top">
-      <span class="logomark"><span class="vb"><span>V</span><span class="bar"></span><span class="b">B</span></span><span class="tag">VIBETURISTIC</span></span>
+      <img class="logomark" src="{% static 'img/logo.png' %}" alt="VibeTuristic">
       <span class="brand__name">Vibe<b>Turistic</b></span>
     </a>
     <div class="hero__right">
@@ -38,8 +41,8 @@
   <svg class="hero__eagle"><use href="{% static 'img/sprite.svg' %}#eagle"></use></svg>
 
   <figure class="pola pola--1"><img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=420&q=80" alt="" decoding="async"><figcaption>наш вайб ✦</figcaption></figure>
-  <figure class="pola pola--2"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=380&q=80" alt="" decoding="async"><figcaption>каньон</figcaption></figure>
-  <figure class="pola pola--3"><img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=420&q=80" alt="" decoding="async"><figcaption>на воде</figcaption></figure>
+  <figure class="pola pola--2"><img src="https://images.unsplash.com/photo-1635692326243-11668510acbe?w=380&q=80" alt="" decoding="async"><figcaption>горный Дагестан</figcaption></figure>
+  <figure class="pola pola--3"><img src="https://images.unsplash.com/photo-1637858363014-f99bd19c5b3c?w=420&q=80" alt="" decoding="async"><figcaption>наш талисман 🐑</figcaption></figure>
   <figure class="pola pola--4"><img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=380&q=80" alt="" decoding="async"><figcaption>водопад</figcaption></figure>
 
   <div class="hero__center">
@@ -179,6 +182,30 @@
   </div>
 </section>
 
+<section class="section socband">
+  <div class="wrap">
+    <div class="soccard reveal">
+      <svg class="soccard__sheep sheep-bounce"><use href="{% static 'img/sprite.svg' %}#sheep"></use></svg>
+      <div class="soccard__tx">
+        <span class="eyebrow" style="color:var(--ink)">Мы в соцсетях</span>
+        <h3>Подписывайся на нас</h3>
+        <p>Делимся маршрутами, закулисьем и фото туристов</p>
+      </div>
+      <div class="soccard__btns">
+        <a class="soccard__btn soc-tg" href="{% if settings.tours.SiteSettings.telegram %}{{ settings.tours.SiteSettings.telegram }}{% else %}#{% endif %}" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg class="i"><use href="{% static 'img/sprite.svg' %}#i-tg"></use></svg>
+        </a>
+        <a class="soccard__btn soc-vk" href="{% if settings.tours.SiteSettings.vk %}{{ settings.tours.SiteSettings.vk }}{% else %}#{% endif %}" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg class="i"><use href="{% static 'img/sprite.svg' %}#i-vk"></use></svg>
+        </a>
+        <a class="soccard__btn soc-wa" href="{% if settings.tours.SiteSettings.whatsapp %}{{ settings.tours.SiteSettings.whatsapp }}{% else %}#{% endif %}" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg class="i"><use href="{% static 'img/sprite.svg' %}#i-wa"></use></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section reviews" id="reviews">
   <div class="wrap">
     <div class="section__head reveal">
@@ -231,6 +258,54 @@
   </div>
 </section>
 
+{% if page.home_included_items.exists or page.home_excluded_items.exists %}
+<section class="section" id="included">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Детали тура · прозрачные условия</span>
+      <h2 class="h-section">Что <span class="hl">входит</span> в стоимость</h2>
+    </div>
+    <div class="inc-grid reveal">
+
+      {% if page.home_included_items.exists %}
+      <div class="inc-col">
+        <div class="inc-col__head">
+          <span class="inc-badge inc-badge--in"><svg class="i" style="width:18px;height:18px"><use href="{% static 'img/sprite.svg' %}#i-check"></use></svg></span>
+          <h3>Включено в стоимость</h3>
+        </div>
+        <ul class="checklist checklist--in">
+          {% for item in page.home_included_items.all %}
+          <li>
+            <span class="mk"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-check"></use></svg></span>
+            <span>{{ item.text }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if page.home_excluded_items.exists %}
+      <div class="inc-col">
+        <div class="inc-col__head">
+          <span class="inc-badge inc-badge--out"><svg class="i" style="width:18px;height:18px"><use href="{% static 'img/sprite.svg' %}#i-x"></use></svg></span>
+          <h3>Доп. расходы</h3>
+        </div>
+        <ul class="checklist checklist--out">
+          {% for item in page.home_excluded_items.all %}
+          <li>
+            <span class="mk"><svg class="i"><use href="{% static 'img/sprite.svg' %}#i-x"></use></svg></span>
+            <span>{{ item.text }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <section class="section dresscode" id="dresscode">
   <div class="wrap">
     <div class="section__head reveal">
@@ -262,6 +337,34 @@
     </div>
   </div>
 </section>
+
+{% if page.faq_items.exists %}
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Частые вопросы · быстрые ответы</span>
+      <h2 class="h-section">Вопросы и <span class="hl">ответы</span></h2>
+    </div>
+    <div class="acc-list reveal" style="max-width:860px;margin:0 auto">
+      {% for item in page.faq_items.all %}
+      <div class="acc-item">
+        <button class="acc-head" type="button" aria-expanded="false">
+          <span class="acc-title">{{ item.question }}</span>
+          <span class="acc-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-inner">
+            {{ item.answer|richtext }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
 
 <section class="section cta" id="ask">
   <div class="wrap">

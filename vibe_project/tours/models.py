@@ -60,6 +60,9 @@ class HomePage(Page):
             ],
             heading="Герой",
         ),
+        InlinePanel("home_included_items", heading="Что включено в стоимость"),
+        InlinePanel("home_excluded_items", heading="Доп. расходы / не включено"),
+        InlinePanel("faq_items", heading="Вопросы и ответы"),
     ]
 
     def get_context(self, request):
@@ -437,6 +440,50 @@ class WhyUsItem(models.Model):
         return self.title
 
 
+class HomeIncludedItem(Orderable):
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="home_included_items")
+    icon = models.CharField("Иконка", max_length=30, choices=ICON_CHOICES, default="i-star")
+    text = models.CharField("Текст", max_length=200)
+
+    panels = [FieldPanel("icon"), FieldPanel("text")]
+
+    class Meta:
+        verbose_name = "Включено в стоимость"
+        verbose_name_plural = "Включено в стоимость"
+
+    def __str__(self):
+        return self.text
+
+
+class HomeExcludedItem(Orderable):
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="home_excluded_items")
+    text = models.CharField("Текст", max_length=200)
+
+    panels = [FieldPanel("text")]
+
+    class Meta:
+        verbose_name = "Доп. расходы"
+        verbose_name_plural = "Доп. расходы"
+
+    def __str__(self):
+        return self.text
+
+
+class FAQItem(Orderable):
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="faq_items")
+    question = models.CharField("Вопрос", max_length=300)
+    answer = RichTextField("Ответ")
+
+    panels = [FieldPanel("question"), FieldPanel("answer")]
+
+    class Meta:
+        verbose_name = "Вопрос / Ответ"
+        verbose_name_plural = "Вопросы / Ответы"
+
+    def __str__(self):
+        return self.question
+
+
 class LegalPage(Page):
     template = "tours/legal_page.html"
     body = RichTextField("Текст документа")
@@ -446,6 +493,24 @@ class LegalPage(Page):
     class Meta:
         verbose_name = "Юридическая страница"
         verbose_name_plural = "Юридические страницы"
+
+
+class BookingLead(models.Model):
+    name = models.CharField("Имя", max_length=100)
+    contact = models.CharField("Контакт (тел./TG)", max_length=100)
+    email = models.EmailField("Email", blank=True)
+    tour_name = models.CharField("Тур", max_length=200, blank=True)
+    departure_label = models.CharField("Заезд", max_length=200, blank=True)
+    msg = models.TextField("Сообщение", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Заявка"
+        verbose_name_plural = "Заявки"
+
+    def __str__(self):
+        return f"{self.name} — {self.created_at:%d.%m.%Y %H:%M}"
 
 
 @register_setting

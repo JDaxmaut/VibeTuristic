@@ -18,54 +18,31 @@
     --w-color-surface-menus: hsl(215, 50%, 18%);   /* глубокий navy */
 }
 
-/* ─── 3. Светлая рабочая область в тёмной теме ────────────────────────── */
-
-/* Ручной тёмный режим (.w-theme-dark на <html>) */
-.w-theme-dark {
-    --w-color-surface-page:              #f1f5f9 !important;
-    --w-color-surface-field:             #ffffff !important;
-    --w-color-surface-field-inactive:    #e2e8f0 !important;
-    --w-color-surface-header:            #f8fafc !important;
-    --w-color-surface-dashboard-panel:   #ffffff !important;
-    --w-color-surface-tooltip:           #334155 !important;
-    --w-color-surface-menu-item-active:  hsl(215, 50%, 26%) !important;
-    --w-color-surface-menus:             hsl(215, 50%, 18%) !important;
-
-    --w-color-text-label:                #1e293b !important;
-    --w-color-text-meta:                 #475569 !important;
-    --w-color-text-placeholder:          #94a3b8 !important;
-    --w-color-text-link-default:         hsl(201, 100%, 38%) !important;
-    --w-color-text-link-hover:           hsl(201, 100%, 30%) !important;
-
-    --w-color-border-furniture:          #e2e8f0 !important;
-    --w-color-border-field-default:      #cbd5e1 !important;
-    --w-color-border-field-inactive:     #e2e8f0 !important;
-    --w-color-border-field-hover:        #94a3b8 !important;
+.sidebar__inner {
+    background-color: hsl(215, 55%, 10%) !important;
 }
 
-/* Авто-тёмный режим (системная тёмная тема) */
-@media (prefers-color-scheme: dark) {
-    .w-theme-system {
-        --w-color-surface-page:              #f1f5f9 !important;
-        --w-color-surface-field:             #ffffff !important;
-        --w-color-surface-field-inactive:    #e2e8f0 !important;
-        --w-color-surface-header:            #f8fafc !important;
-        --w-color-surface-dashboard-panel:   #ffffff !important;
-        --w-color-surface-tooltip:           #334155 !important;
-        --w-color-surface-menu-item-active:  hsl(215, 50%, 26%) !important;
-        --w-color-surface-menus:             hsl(215, 50%, 18%) !important;
+/* ─── 3. Принудительная тёмная тема — перекрывает light/system ───────── */
+:root,
+.w-theme-light,
+.w-theme-system,
+.w-theme-dark {
+    --w-color-surface-page:              hsl(0, 0%, 14.9%) !important;
+    --w-color-surface-field:             hsl(0, 0%, 18%) !important;
+    --w-color-surface-field-inactive:    hsl(0, 0%, 16%) !important;
+    --w-color-surface-header:            hsl(0, 0%, 13.3%) !important;
+    --w-color-surface-dashboard-panel:   hsl(0, 0%, 11.4%) !important;
+    --w-color-surface-tooltip:           hsl(0, 0%, 20%) !important;
 
-        --w-color-text-label:                #1e293b !important;
-        --w-color-text-meta:                 #475569 !important;
-        --w-color-text-placeholder:          #94a3b8 !important;
-        --w-color-text-link-default:         hsl(201, 100%, 38%) !important;
-        --w-color-text-link-hover:           hsl(201, 100%, 30%) !important;
+    --w-color-text-label:                hsl(0, 0%, 78.4%) !important;
+    --w-color-text-meta:                 hsl(0, 0%, 67%) !important;
+    --w-color-text-placeholder:          hsl(0, 0%, 57.3%) !important;
+    --w-color-text-context:              hsl(0, 0%, 96.9%) !important;
 
-        --w-color-border-furniture:          #e2e8f0 !important;
-        --w-color-border-field-default:      #cbd5e1 !important;
-        --w-color-border-field-inactive:     #e2e8f0 !important;
-        --w-color-border-field-hover:        #94a3b8 !important;
-    }
+    --w-color-border-furniture:          hsl(0, 0%, 20%) !important;
+    --w-color-border-field-default:      hsl(0, 0%, 24.7%) !important;
+    --w-color-border-field-inactive:     hsl(0, 0%, 20%) !important;
+    --w-color-border-field-hover:        hsl(0, 0%, 36.1%) !important;
 }
 
 /* ─── 4. Небольшие визуальные улучшения ───────────────────────────────── */

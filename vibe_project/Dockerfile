@@ -48,7 +48,7 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000 \
     PATH="/opt/venv/bin:$PATH" \
-    DJANGO_SETTINGS_MODULE=vibe_project.settings.production \
+    DJANGO_SETTINGS_MODULE=vibe_project.settings.dev \
     DATA_DIR=/app/data
 
 
@@ -64,14 +64,19 @@ WORKDIR /app
 # will be writing to the database file.
 RUN chown wagtail:wagtail /app
 
+# Create data directory (db + media volume) with correct ownership before
+# switching user — Docker initialises named volumes from image contents.
+RUN mkdir -p /app/data/media && chown -R wagtail:wagtail /app/data
+
 # Copy the source code of the project into the container.
 COPY --chown=wagtail:wagtail . .
 
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
-# Collect static files (dev settings avoid SECRET_KEY requirement at build time).
-RUN DJANGO_SETTINGS_MODULE=vibe_project.settings.dev python manage.py collectstatic --noinput --clear
+# Collect static files with production settings so ManifestStaticFilesStorage
+# generates the required staticfiles.json manifest.
+RUN SECRET_KEY=build-placeholder python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
@@ -82,4 +87,4 @@ RUN DJANGO_SETTINGS_MODULE=vibe_project.settings.dev python manage.py collectsta
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; mkdir -p /app/data/media; python manage.py migrate --noinput; gunicorn vibe_project.wsgi:application
+CMD set -xe; python manage.py migrate --noinput; python manage.py ensure_superuser; gunicorn vibe_project.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120 --access-logfile - --error-logfile -

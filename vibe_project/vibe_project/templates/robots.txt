@@ -1,6 +1,5 @@
 User-agent: *
-Disallow: /admin/
-Disallow: /django-admin/
+Disallow: /vibe-admin/
 Disallow: /documents/
 Disallow: /search/
 Allow: /

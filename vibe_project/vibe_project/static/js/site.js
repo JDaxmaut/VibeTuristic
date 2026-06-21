@@ -122,24 +122,15 @@
 
   onScroll();
 
-  /* ---- Mobile bottom nav: hide on scroll down, show on scroll up ---- */
-  var tabnav = document.getElementById('tabnav');
+  /* ---- Mobile book btn: appear only when hero btn--neon is out of view ---- */
   var mobBtn = document.querySelector('.mob-book-btn');
-  if (tabnav && window.matchMedia('(max-width:640px)').matches) {
-    var lastY = window.scrollY;
-    var ticking = false;
-    window.addEventListener('scroll', function () {
-      if (!ticking) {
-        requestAnimationFrame(function () {
-          var y = window.scrollY;
-          var goingDown = y > lastY && y > 80;
-          tabnav.classList.toggle('nav--hidden', goingDown);
-          if (mobBtn) mobBtn.classList.toggle('nav--hidden', goingDown);
-          lastY = y;
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+  var heroBtn = document.querySelector('.hero__cta .btn--neon');
+  if (mobBtn && heroBtn && window.matchMedia('(max-width:640px)').matches) {
+    var mobIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        mobBtn.classList.toggle('nav--hidden', e.isIntersecting);
+      });
+    }, { threshold: 0, rootMargin: '0px' });
+    mobIo.observe(heroBtn);
   }
 })();

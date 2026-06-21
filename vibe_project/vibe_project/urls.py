@@ -1,6 +1,7 @@
+import os
+
 from django.conf import settings
 from django.urls import include, path
-from django.contrib import admin
 from django.views.generic import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -11,9 +12,12 @@ from wagtail.contrib.sitemaps.views import sitemap
 from search import views as search_views
 from tours.views import booking_submit
 
+# Hidden admin URL — set ADMIN_URL env var to a secret path in production.
+# Must end with a slash, e.g. "xK9mQ2pL/".
+_admin_url = os.environ.get("ADMIN_URL", "vibe-admin/")
+
 urlpatterns = [
-    path("django-admin/", admin.site.urls),
-    path("admin/", include(wagtailadmin_urls)),
+    path(_admin_url, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     path("booking/submit/", booking_submit, name="booking_submit"),
@@ -21,9 +25,6 @@ urlpatterns = [
     path("sitemap.xml", sitemap),
 ]
 
-# Static files served by WhiteNoise middleware (no URL patterns needed).
-# Media files: served via Django's serve view in local dev only.
-# In production replace with nginx / object storage.
 if not settings.MEDIA_URL.startswith("http"):
     from django.urls import re_path
     from django.views.static import serve as _serve

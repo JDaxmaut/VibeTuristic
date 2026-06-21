@@ -1,0 +1,7 @@
+vibe_project/settings/local.py
+.env
+*.pyc
+__pycache__/
+db.sqlite3
+/data/
+/media/
