@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, reverse
 from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail import hooks
@@ -15,15 +15,18 @@ def register_admin_urls():
     ]
 
 
+@hooks.register("construct_main_menu")
+def hide_help_menu(request, menu_items):
+    menu_items[:] = [item for item in menu_items if item.name != 'help']
+
 @hooks.register("register_admin_menu_item")
 def register_docs_menu_item():
     return MenuItem(
         label="Справка",
-        url="/admin/docs/",
+        url=reverse("admin_docs"),
         icon_name="help",
         order=9999,
     )
-
 
 @hooks.register("insert_global_admin_css")
 def global_admin_css():
