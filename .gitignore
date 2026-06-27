@@ -7,7 +7,6 @@ __pycache__/
 
 # ── Django / Wagtail ──────────────────────────────────────────
 *.log
-*.sqlite3
 vibe_project/vibe_project/settings/local.py
 
 # Collectstatic output (generated at build time, not source)
