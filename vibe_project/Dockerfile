@@ -78,6 +78,18 @@ USER wagtail
 # generates the required staticfiles.json manifest.
 RUN SECRET_KEY=build-placeholder python manage.py collectstatic --noinput --clear
 
+# Switch back to root so the entrypoint can chown bind-mounted volumes.
+USER root
+
+# Install gosu for dropping privileges.
+RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends gosu && rm -rf /var/lib/apt/lists/*
+
+# Copy and mark the entrypoint.
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Runtime command that executes when "docker run" is called, it does the
 # following:
 #   1. Migrate the database.
