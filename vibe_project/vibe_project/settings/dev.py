@@ -10,32 +10,6 @@ CSRF_TRUSTED_ORIGINS = ["https://*.tuna.am", "https://*.ngrok.io", "https://*.ng
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "INFO",
-        },
-        "django.request": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-        "django.db.backends": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-        },
-    },
-}
-
 try:
     from .local import *
 except ImportError:
