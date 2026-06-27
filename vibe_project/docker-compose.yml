@@ -4,7 +4,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      SECRET_KEY: "_K5eApckqAy&1+&LhAfIKaG=HHiE#xa\mRRfqw-B0iT^yK4^Be"
+      SECRET_KEY: '_K5eApckqAy&1+&LhAfIKaG=HHiE#xa\mRRfqw-B0iT^yK4^Be'
       ALLOWED_HOSTS: "*"
       ADMIN_URL: "qyCRq2vxRRAjlg/"
       DJANGO_SUPERUSER_USERNAME: "mgr_b9d3d0ee"
