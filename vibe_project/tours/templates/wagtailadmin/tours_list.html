@@ -1,0 +1,134 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailimages_tags %}
+
+{% block titletag %}Мои туры — Vibe Turistic{% endblock %}
+
+{% block content %}
+<style>
+.tl-wrap { padding: 32px 40px; max-width: 1200px; }
+.tl-head  { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 700px) {
+  .tl-wrap { padding: 16px; }
+  .tl-head { flex-direction: column; align-items: flex-start; }
+}
+</style>
+<div class="tl-wrap">
+
+  <div class="tl-head">
+    <h1 style="margin:0;font-size:22px;font-weight:500;color:#d8e0dc;">Мои туры</h1>
+    <a href="/{{ admin_url }}pages/add/tours/tourpage/{{ home_id }}/"
+       style="display:inline-flex;align-items:center;gap:8px;background:#d4a853;color:#111c19;
+              text-decoration:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6.5 1v11M1 6.5h11"/></svg>
+      Добавить тур
+    </a>
+  </div>
+
+  {% if live_tours %}
+  <div style="margin-bottom:10px;">
+    <span style="color:rgba(216,224,220,0.35);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">
+      Опубликованы · {{ live_tours|length }}
+    </span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:36px;">
+    {% for tour in live_tours %}
+    <div style="background:#1a2a26;border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;">
+      <div style="height:160px;background:#1a2e2a;position:relative;overflow:hidden;">
+        {% if tour.hero_image %}
+          {% image tour.hero_image fill-560x320 format-webp as thumb %}
+          <img src="{{ thumb.url }}" alt="" style="width:100%;height:100%;object-fit:cover;">
+        {% else %}
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(216,224,220,0.15)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          </div>
+        {% endif %}
+        <div style="position:absolute;top:10px;right:10px;">
+          <span style="background:rgba(26,46,34,0.85);color:#7ec87e;font-size:10px;padding:3px 8px;border-radius:20px;letter-spacing:0.05em;backdrop-filter:blur(4px);">
+            Live
+          </span>
+        </div>
+      </div>
+      <div style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:500;color:#d8e0dc;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          {{ tour.title }}
+        </div>
+        <div style="font-size:12px;color:rgba(216,224,220,0.35);margin-bottom:14px;">
+          {{ tour.badge|default:"—" }}{% if tour.price %} · {{ tour.price }}{% endif %}
+        </div>
+        <div style="display:flex;gap:8px;">
+          <a href="/{{ admin_url }}pages/{{ tour.pk }}/edit/"
+             style="flex:1;text-align:center;background:rgba(255,255,255,0.06);color:#d8e0dc;
+                    text-decoration:none;padding:7px 0;border-radius:7px;font-size:12px;border:1px solid rgba(255,255,255,0.08);">
+            Редактировать
+          </a>
+          <a href="{{ tour.url }}" target="_blank"
+             style="display:inline-flex;align-items:center;justify-content:center;gap:5px;
+                    background:rgba(212,168,83,0.12);color:#d4a853;text-decoration:none;
+                    padding:7px 12px;border-radius:7px;font-size:12px;border:1px solid rgba(212,168,83,0.2);">
+            <svg width="11" height="11" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8M8 1h4m0 0v4m0-4L5.5 7.5"/>
+            </svg>
+            Открыть
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if draft_tours %}
+  <div style="margin-bottom:10px;">
+    <span style="color:rgba(216,224,220,0.35);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">
+      Черновики · {{ draft_tours|length }}
+    </span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+    {% for tour in draft_tours %}
+    <div style="background:#1a2a26;border:1px solid rgba(255,180,60,0.12);border-radius:12px;overflow:hidden;opacity:0.8;">
+      <div style="height:160px;background:#151f1b;position:relative;overflow:hidden;">
+        {% if tour.hero_image %}
+          {% image tour.hero_image fill-560x320 format-webp as thumb %}
+          <img src="{{ thumb.url }}" alt="" style="width:100%;height:100%;object-fit:cover;filter:grayscale(0.4);">
+        {% else %}
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(216,224,220,0.12)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          </div>
+        {% endif %}
+        <div style="position:absolute;top:10px;right:10px;">
+          <span style="background:rgba(30,25,10,0.85);color:#e0a030;font-size:10px;padding:3px 8px;border-radius:20px;letter-spacing:0.05em;backdrop-filter:blur(4px);">
+            Черновик
+          </span>
+        </div>
+      </div>
+      <div style="padding:14px 16px;">
+        <div style="font-size:14px;font-weight:500;color:#d8e0dc;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          {{ tour.title }}
+        </div>
+        <div style="font-size:12px;color:rgba(216,224,220,0.35);margin-bottom:14px;">
+          {{ tour.badge|default:"Бейдж не указан" }}
+        </div>
+        <a href="/{{ admin_url }}pages/{{ tour.pk }}/edit/"
+           style="display:block;text-align:center;background:rgba(255,255,255,0.06);color:#d8e0dc;
+                  text-decoration:none;padding:7px 0;border-radius:7px;font-size:12px;border:1px solid rgba(255,255,255,0.08);">
+          Редактировать и опубликовать
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if not live_tours and not draft_tours %}
+  <div style="text-align:center;padding:80px 0;color:rgba(216,224,220,0.35);">
+    <div style="font-size:40px;margin-bottom:16px;">&#9992;</div>
+    <div style="font-size:15px;">Туров пока нет</div>
+    <a href="/{{ admin_url }}pages/add/tours/tourpage/{{ home_id }}/"
+       style="display:inline-block;margin-top:20px;color:#d4a853;text-decoration:none;font-size:13px;">
+      Создать первый тур &rarr;
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+<div style="background:#1a2a26;border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;">
+  <div style="padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;">
+    <span style="color:#d8e0dc;font-size:13px;font-weight:500;">Ближайшие заезды</span>
+    <span style="color:rgba(216,224,220,0.35);font-size:12px;">{{ dates|length }} заездов</span>
+  </div>
+
+  {% if dates %}
+  <form method="post" action="/{{ admin_url }}quick-save-dates/">
+    {% csrf_token %}
+
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table style="width:100%;border-collapse:collapse;min-width:480px;">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.07);">
+          <th style="padding:10px 24px;text-align:left;color:rgba(216,224,220,0.35);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;">Тур</th>
+          <th style="padding:10px 16px;text-align:left;color:rgba(216,224,220,0.35);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;">Даты</th>
+          <th style="padding:10px 16px;text-align:center;color:rgba(216,224,220,0.35);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;">Мест</th>
+          <th style="padding:10px 16px;text-align:center;color:rgba(216,224,220,0.35);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;">Статус</th>
+          <th style="padding:10px 16px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in dates %}
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+          <td style="padding:12px 24px;">
+            <a href="/{{ admin_url }}pages/{{ d.tour.pk }}/edit/#tab-schedule"
+               style="color:#d8e0dc;text-decoration:none;font-size:13px;">
+              {{ d.tour.title }}
+            </a>
+          </td>
+          <td style="padding:12px 16px;color:rgba(216,224,220,0.6);font-size:13px;white-space:nowrap;">
+            {{ d.date_from|date:"d.m" }} — {{ d.date_to|date:"d.m.Y" }}
+          </td>
+          <td style="padding:12px 16px;text-align:center;">
+            <input type="number" name="seats_{{ d.pk }}" value="{{ d.seats_left }}"
+                   min="0"
+                   style="width:60px;background:#111c19;border:1px solid rgba(255,255,255,0.1);color:#d8e0dc;border-radius:6px;padding:5px 8px;font-size:13px;text-align:center;">
+          </td>
+          <td style="padding:12px 16px;text-align:center;">
+            <select name="status_{{ d.pk }}"
+                    style="background:#111c19;border:1px solid rgba(255,255,255,0.1);color:#d8e0dc;border-radius:6px;padding:5px 8px;font-size:12px;">
+              <option value="ok" {% if d.status == "ok" %}selected{% endif %}>есть места</option>
+              <option value="low" {% if d.status == "low" %}selected{% endif %}>мало мест</option>
+              <option value="full" {% if d.status == "full" %}selected{% endif %}>нет мест</option>
+            </select>
+          </td>
+          <td style="padding:12px 16px;text-align:center;">
+            <a href="/{{ admin_url }}pages/{{ d.tour.pk }}/edit/"
+               style="color:rgba(216,224,220,0.35);font-size:12px;text-decoration:none;">✎</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <div style="padding:14px 24px;border-top:1px solid rgba(255,255,255,0.07);text-align:right;">
+      <button type="submit"
+              style="background:#d4a853;color:#111c19;border:none;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">
+        Сохранить изменения
+      </button>
+    </div>
+  </form>
+  {% else %}
+  <div style="padding:32px 24px;text-align:center;color:rgba(216,224,220,0.35);font-size:13px;">
+    Нет предстоящих заездов
+  </div>
+  {% endif %}
+</div>
