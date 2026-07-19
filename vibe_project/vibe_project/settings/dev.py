@@ -8,6 +8,8 @@ ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.tuna.am", "https://*.ngrok.io", "https://*.ngrok-free.app", "http://localhost:8000", "http://127.0.0.1:8000", "https://vibeturistic.ru", "https://www.vibeturistic.ru"]
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 try:
