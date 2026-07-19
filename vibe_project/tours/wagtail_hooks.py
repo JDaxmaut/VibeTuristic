@@ -2,6 +2,7 @@ import os
 from datetime import date
 
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.templatetags.static import static
@@ -102,6 +103,7 @@ def tours_admin_view(request):
 
 
 # ── Quick-save dates endpoint ─────────────────────────────────
+@csrf_exempt
 @require_POST
 def quick_save_dates(request):
     dates = Departure.objects.filter(date_from__gte=date.today())
