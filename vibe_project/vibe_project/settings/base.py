@@ -128,7 +128,7 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-WAGTAILADMIN_BASE_URL = "http://localhost:8000"
+WAGTAILADMIN_BASE_URL = "https://vibeturistic.ru"
 
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
 WAGTAILDOCS_MAX_UPLOAD_SIZE = 10 * 1024 * 1024
