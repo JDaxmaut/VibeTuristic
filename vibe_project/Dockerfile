@@ -99,4 +99,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manaC:\Users\dxmta\Desktop\dotge.py migrate --noinput; python manage.py ensure_superuser; gunicorn vibe_project.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120 --access-logfile - --error-logfile -
+CMD set -xe; python manage.py migrate --noinput; python manage.py ensure_superuser; gunicorn vibe_project.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120 --access-logfile - --error-logfile -
